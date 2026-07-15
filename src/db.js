@@ -23,7 +23,6 @@ const mapUser = (u) => {
     id: u.id,
     nome: u.nome,
     email: u.email,
-    senha: u.senha,
     barbeariaName: u.barbearia_name,
     role: u.role
   };
@@ -50,7 +49,8 @@ const mapAtendimento = (a) => {
     topo: a.topo,
     barba: a.barba,
     produtos: a.produtos,
-    fotos: a.fotos || []
+    fotos: a.fotos || [],
+    cliente: a.clientes ? mapClient(a.clientes) : undefined
   };
 };
 
@@ -70,12 +70,17 @@ const mapAgendamento = (ag) => {
 export const db = {
   // Authentication APIs
   login: async (email, senha) => {
-    const cleanEmail = email.toLowerCase().trim();
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email: email.toLowerCase().trim(),
+      password: senha
+    });
+
+    if (authError) throw authError;
+
     const { data, error } = await supabase
       .from('usuarios')
       .select('*')
-      .eq('email', cleanEmail)
-      .eq('senha', senha)
+      .eq('id', authData.user.id)
       .maybeSingle();
 
     if (error) throw error;
@@ -97,7 +102,7 @@ export const db = {
   adminAddBarbeiro: async (barber) => {
     const cleanEmail = barber.email.toLowerCase().trim();
     
-    // Check if email already exists
+    // Check if email already exists in public.usuarios
     const { data: existing, error: checkError } = await supabase
       .from('usuarios')
       .select('id')
@@ -109,20 +114,72 @@ export const db = {
       throw new Error("Este e-mail já está cadastrado.");
     }
 
-    const { data, error } = await supabase
-      .from('usuarios')
-      .insert({
-        nome: barber.nome,
-        email: cleanEmail,
-        senha: barber.senha,
-        barbearia_name: barber.barbeariaName,
-        role: 'barbeiro'
-      })
-      .select()
-      .single();
+    // Create a temporary sessionless Supabase client to register the user
+    // without hijacking the current logged-in admin session
+    const tempSupabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false
+      }
+    });
 
-    if (error) throw error;
-    return mapUser(data);
+    const { data: authData, error: authError } = await tempSupabase.auth.signUp({
+      email: cleanEmail,
+      password: barber.senha,
+      options: {
+        data: {
+          nome: barber.nome,
+          barbearia_name: barber.barbeariaName,
+          role: 'barbeiro'
+        }
+      }
+    });
+
+    if (authError) throw authError;
+    if (!authData.user) {
+      throw new Error("Não foi possível criar a conta de autenticação.");
+    }
+
+    // Wait a brief moment for the database trigger to create the public.usuarios profile,
+    // and query it to return the mapped user.
+    let profile = null;
+    for (let i = 0; i < 4; i++) {
+      const { data, error } = await supabase
+        .from('usuarios')
+        .select('*')
+        .eq('id', authData.user.id)
+        .maybeSingle();
+      
+      if (data) {
+        profile = data;
+        break;
+      }
+      await new Promise(resolve => setTimeout(resolve, 250));
+    }
+
+    if (!profile) {
+      // Fallback: If database trigger did not run, manually insert the profile
+      const { data: insertedData, error: insertError } = await supabase
+        .from('usuarios')
+        .insert({
+          id: authData.user.id,
+          nome: barber.nome,
+          email: cleanEmail,
+          barbearia_name: barber.barbeariaName,
+          role: 'barbeiro',
+          senha: barber.senha // Keep provisory password reference in database if needed
+        })
+        .select()
+        .single();
+        
+      if (insertError) {
+        console.error("Erro ao criar perfil manualmente:", insertError);
+        throw new Error("Perfil do barbeiro não pôde ser criado automaticamente. Verifique se o e-mail não está duplicado ou desative a confirmação de e-mail no Supabase.");
+      }
+      profile = insertedData;
+    }
+
+    return mapUser(profile);
   },
 
   adminUpdateBarbeiro: async (id, fields) => {
@@ -146,7 +203,6 @@ export const db = {
       .update({
         nome: fields.nome,
         email: cleanEmail,
-        senha: fields.senha,
         barbearia_name: fields.barbeariaName
       })
       .eq('id', id)
@@ -376,13 +432,6 @@ export const db = {
       const mappedCliente = mapClient(cliente);
 
       if (clientCuts.length === 0) {
-        list.push({
-          cliente: mappedCliente,
-          diasPassados: 999,
-          diasAtrasados: 999,
-          precisaRetorno: true,
-          ultimoCorte: null
-        });
         return;
       }
       
@@ -488,5 +537,40 @@ export const db = {
       totalAtendimentos: atendimentosRes.count || 0,
       atendimentosMes: atendimentosMesRes.count || 0
     };
+  },
+
+  getAgendamentosRange: async (barberId, startDateStr, endDateStr) => {
+    const { data, error } = await supabase
+      .from('agendamentos')
+      .select('*, clientes(*)')
+      .eq('barber_id', barberId)
+      .gte('data_hora', `${startDateStr}T00:00:00`)
+      .lte('data_hora', `${endDateStr}T23:59:59`);
+
+    if (error) throw error;
+    return (data || []).map(mapAgendamento);
+  },
+
+  getAtendimentosForMetrics: async (barberId) => {
+    const { data, error } = await supabase
+      .from('atendimentos')
+      .select('*, clientes!inner(*)')
+      .eq('clientes.barber_id', barberId)
+      .order('data', { ascending: false });
+
+    if (error) throw error;
+    return (data || []).map(mapAtendimento);
+  },
+
+  getAgendamentosConcluidos: async (barberId) => {
+    const { data, error } = await supabase
+      .from('agendamentos')
+      .select('*, clientes!inner(*)')
+      .eq('barber_id', barberId)
+      .eq('status', 'Concluído')
+      .order('data_hora', { ascending: false });
+
+    if (error) throw error;
+    return (data || []).map(mapAgendamento);
   }
 };

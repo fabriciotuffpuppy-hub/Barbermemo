@@ -1,0 +1,108 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { db, supabase } from '../db';
+
+const AuthContext = createContext(null);
+
+export function AuthProvider({ children }) {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [authError, setAuthError] = useState('');
+
+  useEffect(() => {
+    // Get active session on startup
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session && session.user) {
+        supabase
+          .from('usuarios')
+          .select('*')
+          .eq('id', session.user.id)
+          .maybeSingle()
+          .then(({ data, error }) => {
+            if (data && !error) {
+              setCurrentUser({
+                id: data.id,
+                nome: data.nome,
+                email: data.email,
+                barbeariaName: data.barbearia_name,
+                role: data.role
+              });
+            }
+            setAuthLoading(false);
+          });
+      } else {
+        setAuthLoading(false);
+      }
+    });
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session && session.user) {
+        const { data, error } = await supabase
+          .from('usuarios')
+          .select('*')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        
+        if (data && !error) {
+          setCurrentUser({
+            id: data.id,
+            nome: data.nome,
+            email: data.email,
+            barbeariaName: data.barbearia_name,
+            role: data.role
+          });
+        }
+      } else {
+        setCurrentUser(null);
+      }
+      setAuthLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const login = async (email, senha) => {
+    setAuthError('');
+    try {
+      const session = await db.login(email, senha);
+      if (session) {
+        setCurrentUser(session);
+        return session;
+      } else {
+        setAuthError('E-mail ou senha incorretos.');
+        return null;
+      }
+    } catch (err) {
+      console.error(err);
+      if (err.message && err.message.includes('Invalid login credentials')) {
+        setAuthError('E-mail ou senha incorretos.');
+      } else {
+        setAuthError('Erro ao fazer login: ' + (err.message || 'Erro desconhecido.'));
+      }
+      throw err;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+      setCurrentUser(null);
+    } catch (err) {
+      console.error("Erro ao fazer logout:", err);
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ currentUser, authLoading, authError, setAuthError, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth deve ser utilizado dentro de um AuthProvider');
+  }
+  return context;
+}
