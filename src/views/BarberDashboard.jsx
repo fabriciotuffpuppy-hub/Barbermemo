@@ -81,8 +81,36 @@ export default function BarberDashboard() {
             </span>
           </div>
         </div>
-      </div>
 
+        {/* Link de Agendamento Card (Desktop) */}
+        <div className="bg-barber-card/60 border border-barber-border/80 p-5 rounded-2xl w-full text-left font-sans select-none space-y-3">
+          <div className="flex items-center gap-2 text-barber-accent-light">
+            <Calendar className="w-4 h-4" />
+            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Seu Link de Agendamento</span>
+          </div>
+          <p className="text-[10.5px] text-zinc-400 leading-normal">
+            Compartilhe este link na sua bio do Instagram ou envie por WhatsApp para que seus clientes agendem horários sozinhos.
+          </p>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              readOnly
+              value={`${window.location.origin}/agendar/${currentUser.id}`}
+              className="flex-1 bg-zinc-950 border border-barber-border rounded-xl px-3 py-2 text-xs text-zinc-300 font-mono select-all focus:ring-0"
+            />
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(`${window.location.origin}/agendar/${currentUser.id}`);
+                alert("Link de agendamento copiado com sucesso!");
+              }}
+              className="bg-barber-accent hover:bg-barber-accent-hover text-white px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 cursor-pointer shrink-0"
+            >
+              Copiar
+            </button>
+          </div>
+        </div>
+      </div>
+ 
       {/* 2. MOBILE DASHBOARD (Visible on screens < md) */}
       <div className="md:hidden px-4 py-5 space-y-6 fade-in">
         {/* Stats */}
@@ -101,6 +129,34 @@ export default function BarberDashboard() {
             <TrendingUp className="w-4 h-4 mx-auto mb-1 text-barber-accent-light" />
             <span className="text-[10px] text-barber-text-secondary block">Este Mês</span>
             <span className="text-base font-bold text-zinc-200">{stats.atendimentosMes}</span>
+          </div>
+        </div>
+
+        {/* Link de Agendamento Card (Mobile) */}
+        <div className="bg-barber-card border border-barber-border rounded-xl p-4 space-y-2 select-none">
+          <div className="flex items-center gap-2 text-barber-accent-light">
+            <Calendar className="w-3.5 h-3.5" />
+            <span className="text-[10px] text-zinc-550 font-bold uppercase tracking-wider">Link de Agendamento</span>
+          </div>
+          <p className="text-[10px] text-zinc-400 leading-normal">
+            Clientes podem se agendar sozinhos abrindo este link:
+          </p>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              readOnly
+              value={`${window.location.origin}/agendar/${currentUser.id}`}
+              className="flex-1 bg-zinc-950 border border-barber-border rounded-lg px-2.5 py-1.5 text-[10px] text-zinc-300 font-mono select-all focus:ring-0"
+            />
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(`${window.location.origin}/agendar/${currentUser.id}`);
+                alert("Link de agendamento copiado com sucesso!");
+              }}
+              className="bg-barber-accent hover:bg-barber-accent-hover text-white px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all active:scale-95 cursor-pointer shrink-0"
+            >
+              Copiar
+            </button>
           </div>
         </div>
 

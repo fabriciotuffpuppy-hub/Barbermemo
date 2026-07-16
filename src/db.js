@@ -24,7 +24,17 @@ const mapUser = (u) => {
     nome: u.nome,
     email: u.email,
     barbeariaName: u.barbearia_name,
-    role: u.role
+    role: u.role,
+    horaInicio: u.hora_inicio || '08:00',
+    horaFim: u.hora_fim || '20:00',
+    servicosConfig: u.servicos_config || [
+      { name: 'Corte', duration: 40, price: 'R$ 40,00' },
+      { name: 'Barba', duration: 30, price: 'R$ 30,00' },
+      { name: 'Corte + Barba', duration: 60, price: 'R$ 60,00' },
+      { name: 'Sobrancelha', duration: 20, price: 'R$ 15,00' },
+      { name: 'Platinado / Luzes', duration: 90, price: 'R$ 120,00' },
+      { name: 'Selagem / Progressiva', duration: 120, price: 'R$ 150,00' }
+    ]
   };
 };
 
@@ -400,16 +410,23 @@ export const db = {
 
     if (atendError) throw atendError;
 
-    // Cascade complete today's pending/confirmed appointments
-    const todayStr = new Date().toISOString().split('T')[0];
-    await supabase
-      .from('agendamentos')
-      .update({ status: 'Concluído' })
-      .eq('cliente_id', atendimento.clienteId)
-      .eq('barber_id', barberId)
-      .neq('status', 'Concluído')
-      .gte('data_hora', `${todayStr}T00:00:00`)
-      .lte('data_hora', `${todayStr}T23:59:59`);
+    // Mark specific appointment as Concluído if ID is provided, otherwise cascade today's
+    if (atendimento.appointmentId) {
+      await supabase
+        .from('agendamentos')
+        .update({ status: 'Concluído' })
+        .eq('id', atendimento.appointmentId);
+    } else {
+      const todayStr = new Date().toISOString().split('T')[0];
+      await supabase
+        .from('agendamentos')
+        .update({ status: 'Concluído' })
+        .eq('cliente_id', atendimento.clienteId)
+        .eq('barber_id', barberId)
+        .neq('status', 'Concluído')
+        .gte('data_hora', `${todayStr}T00:00:00`)
+        .lte('data_hora', `${todayStr}T23:59:59`);
+    }
 
     return mapAtendimento(newAtend);
   },
@@ -572,5 +589,69 @@ export const db = {
 
     if (error) throw error;
     return (data || []).map(mapAgendamento);
+  },
+
+  getBarberPublicInfo: async (barberId) => {
+    const { data, error } = await supabase
+      .from('usuarios')
+      .select('nome, barbearia_name, hora_inicio, hora_fim, servicos_config')
+      .eq('id', barberId)
+      .eq('role', 'barbeiro')
+      .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  },
+
+  getPublicAgendamentos: async (barberId, dateString) => {
+    const { data, error } = await supabase
+      .from('agendamentos')
+      .select('data_hora, servicos, status')
+      .eq('barber_id', barberId)
+      .gte('data_hora', `${dateString}T00:00:00`)
+      .lte('data_hora', `${dateString}T23:59:59`)
+      .neq('status', 'Cancelado');
+
+    if (error) throw error;
+    return data || [];
+  },
+
+  addPublicAgendamento: async (barberId, agendamento) => {
+    const cleanPhone = agendamento.telefone.replace(/\D/g, '');
+    
+    const { data, error } = await supabase.rpc('create_public_booking', {
+      p_barber_id: barberId,
+      p_nome: agendamento.nome.trim(),
+      p_telefone: cleanPhone,
+      p_data_hora: agendamento.dataHora,
+      p_servicos: agendamento.servicos || 'Corte'
+    });
+
+    if (error) throw error;
+    
+    return {
+      id: data.id,
+      clienteId: data.cliente_id,
+      dataHora: data.data_hora,
+      servicos: data.servicos,
+      status: data.status,
+      barberId: barberId
+    };
+  },
+
+  updateBarberConfig: async (barberId, config) => {
+    const { data, error } = await supabase
+      .from('usuarios')
+      .update({
+        hora_inicio: config.horaInicio,
+        hora_fim: config.horaFim,
+        servicos_config: config.servicosConfig
+      })
+      .eq('id', barberId)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return mapUser(data);
   }
 };

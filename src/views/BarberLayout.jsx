@@ -6,7 +6,7 @@ import { useAgendamentos } from '../hooks/useAgendamentos';
 import {
   Scissors, LogOut, Search, X, Users, Scissors as CutsIcon,
   TrendingUp, Clock, Plus, Check, UserCheck, Calendar, CalendarDays,
-  UserPlus, BarChart3, AlertCircle, Phone, ChevronLeft
+  UserPlus, BarChart3, AlertCircle, Phone, ChevronLeft, Settings
 } from 'lucide-react';
 
 export default function BarberLayout() {
@@ -187,13 +187,22 @@ export default function BarberLayout() {
             </div>
           </div>
 
-          <button
-            onClick={handleLogoutClick}
-            className="p-2 bg-barber-light/30 border border-barber-border rounded-lg text-zinc-400 hover:text-white"
-            title="Sair"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate('/settings')}
+              className="p-2 bg-barber-light/30 border border-barber-border rounded-lg text-zinc-400 hover:text-white cursor-pointer"
+              title="Configurações"
+            >
+              <Settings className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={handleLogoutClick}
+              className="p-2 bg-barber-light/30 border border-barber-border rounded-lg text-zinc-400 hover:text-white cursor-pointer"
+              title="Sair"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </header>
 
         {/* Main Content Area */}
@@ -256,13 +265,22 @@ export default function BarberLayout() {
               </div>
             </div>
 
-            <button
-              onClick={handleLogoutClick}
-              className="p-1.5 hover:bg-zinc-800 rounded-lg text-zinc-500 hover:text-white transition-colors cursor-pointer"
-              title="Sair"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => navigate('/settings')}
+                className="p-1.5 hover:bg-zinc-800 rounded-lg text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                title="Configurações"
+              >
+                <Settings className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleLogoutClick}
+                className="p-1.5 hover:bg-zinc-800 rounded-lg text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                title="Sair"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Sidebar Navigation Selector */}
@@ -468,9 +486,15 @@ export default function BarberLayout() {
                           <div className="flex gap-1" onClick={e => e.stopPropagation()}>
                             {ag.status !== 'Concluído' && (
                               <button
-                                onClick={() => handleToggleAppointmentStatus(ag.id, 'Concluído')}
+                                onClick={() => {
+                                  if (ag.clienteId) {
+                                    navigate(`/clientes/${ag.clienteId}/atendimentos/novo`, {
+                                      state: { appointmentId: ag.id }
+                                    });
+                                  }
+                                }}
                                 className="text-emerald-500 hover:text-emerald-400 p-0.5 cursor-pointer"
-                                title="Marcar Concluído"
+                                title="Registrar e Concluir"
                               >
                                 <Check className="w-3 h-3" />
                               </button>

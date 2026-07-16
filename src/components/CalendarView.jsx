@@ -451,9 +451,13 @@ export default function CalendarView() {
                 <div className="flex gap-2">
                   {selectedApp.status !== 'Concluído' && (
                     <button
-                      onClick={() => handleToggleStatus(selectedApp.id, 'Concluído')}
-                      disabled={actionLoading}
-                      className="flex-1 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 transition-all disabled:opacity-50 cursor-pointer"
+                      onClick={() => {
+                        navigate(`/clientes/${selectedApp.clienteId}/atendimentos/novo`, {
+                          state: { appointmentId: selectedApp.id }
+                        });
+                        setSelectedApp(null);
+                      }}
+                      className="flex-1 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer"
                     >
                       <Check className="w-3.5 h-3.5" />
                       Concluir

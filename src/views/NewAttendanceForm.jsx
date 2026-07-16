@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
+import { useParams, useNavigate, useOutletContext, useLocation } from 'react-router-dom';
 import { db } from '../db';
 import ImagePicker from '../components/ImagePicker';
 import {
@@ -9,6 +9,7 @@ import {
 export default function NewAttendanceForm() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { currentUser, addAtendimento, refreshClientes } = useOutletContext();
 
   const [activeClient, setActiveClient] = useState(null);
@@ -62,7 +63,8 @@ export default function NewAttendanceForm() {
         topo: form.topo,
         barba: form.barba,
         produtos: form.produtos,
-        fotos: selectedPhotos
+        fotos: selectedPhotos,
+        appointmentId: location.state?.appointmentId
       });
 
       await refreshClientes();

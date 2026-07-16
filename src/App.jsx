@@ -12,6 +12,8 @@ import NewAppointmentForm from './views/NewAppointmentForm';
 import NewAttendanceForm from './views/NewAttendanceForm';
 import CalendarView from './components/CalendarView';
 import MetricsView from './components/MetricsView';
+import PublicBookingView from './views/PublicBookingView';
+import SettingsView from './views/SettingsView';
 
 function AppRoutes() {
   const { currentUser, authLoading } = useAuth();
@@ -29,6 +31,9 @@ function AppRoutes() {
     <Routes>
       {/* Auth Route */}
       <Route path="/login" element={<LoginView />} />
+
+      {/* Public Booking Route */}
+      <Route path="/agendar/:barberId" element={<PublicBookingView />} />
 
       {/* SaaS Admin Portal */}
       <Route
@@ -58,6 +63,7 @@ function AppRoutes() {
         
         {/* Main Barber Workspace Views */}
         <Route path="dashboard" element={<BarberDashboard />} />
+        <Route path="settings" element={<SettingsView />} />
         
         {/* Client Management */}
         <Route path="clientes/novo" element={<NewClientForm />} />

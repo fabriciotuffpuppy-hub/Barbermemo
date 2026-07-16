@@ -24,7 +24,17 @@ export function AuthProvider({ children }) {
                 nome: data.nome,
                 email: data.email,
                 barbeariaName: data.barbearia_name,
-                role: data.role
+                role: data.role,
+                horaInicio: data.hora_inicio || '08:00',
+                horaFim: data.hora_fim || '20:00',
+                servicosConfig: data.servicos_config || [
+                  { name: 'Corte', duration: 40, price: 'R$ 40,00' },
+                  { name: 'Barba', duration: 30, price: 'R$ 30,00' },
+                  { name: 'Corte + Barba', duration: 60, price: 'R$ 60,00' },
+                  { name: 'Sobrancelha', duration: 20, price: 'R$ 15,00' },
+                  { name: 'Platinado / Luzes', duration: 90, price: 'R$ 120,00' },
+                  { name: 'Selagem / Progressiva', duration: 120, price: 'R$ 150,00' }
+                ]
               });
             }
             setAuthLoading(false);
@@ -49,7 +59,17 @@ export function AuthProvider({ children }) {
             nome: data.nome,
             email: data.email,
             barbeariaName: data.barbearia_name,
-            role: data.role
+            role: data.role,
+            horaInicio: data.hora_inicio || '08:00',
+            horaFim: data.hora_fim || '20:00',
+            servicosConfig: data.servicos_config || [
+              { name: 'Corte', duration: 40, price: 'R$ 40,00' },
+              { name: 'Barba', duration: 30, price: 'R$ 30,00' },
+              { name: 'Corte + Barba', duration: 60, price: 'R$ 60,00' },
+              { name: 'Sobrancelha', duration: 20, price: 'R$ 15,00' },
+              { name: 'Platinado / Luzes', duration: 90, price: 'R$ 120,00' },
+              { name: 'Selagem / Progressiva', duration: 120, price: 'R$ 150,00' }
+            ]
           });
         }
       } else {
@@ -93,7 +113,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, authLoading, authError, setAuthError, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, setCurrentUser, authLoading, authError, setAuthError, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
