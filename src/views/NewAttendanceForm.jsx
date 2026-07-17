@@ -68,7 +68,11 @@ export default function NewAttendanceForm() {
       });
 
       await refreshClientes();
-      navigate(`/clientes/${id}`);
+      if (location.state?.appointmentId) {
+        navigate('/agendamentos');
+      } else {
+        navigate(`/clientes/${id}`);
+      }
     } catch (err) {
       console.error(err);
       alert("Erro ao salvar atendimento.");

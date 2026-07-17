@@ -59,6 +59,7 @@ export default function PublicBookingView() {
           setError('Barbeiro não encontrado ou link inválido.');
         } else {
           setBarberInfo(data);
+          setSelectedBarberId(barberId);
           const services = data.servicos_config || SERVICES;
           if (services.length > 0) {
             setSelectedService(services[0].name);
@@ -412,7 +413,7 @@ export default function PublicBookingView() {
     }
 
     return (
-      <div className="min-h-screen bg-barber-dark text-barber-text-primary p-4 pb-12 font-sans flex items-center justify-center select-none">
+      <div className="min-h-screen bg-barber-dark text-barber-text-primary p-4 pb-12 font-sans flex flex-col items-center justify-center gap-4 select-none">
         <div className="w-full max-w-md bg-barber-card border border-barber-border rounded-2xl shadow-xl overflow-hidden fade-in flex flex-col">
           
           <div className="p-5 border-b border-barber-border bg-barber-dark/40 flex items-center gap-3">
@@ -425,7 +426,7 @@ export default function PublicBookingView() {
             </div>
           </div>
 
-          <div className="p-5 space-y-6">
+          <div className="p-5 space-y-4">
             
             <div className="space-y-3">
               <span className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest block">Profissionais Disponíveis</span>
@@ -465,10 +466,27 @@ export default function PublicBookingView() {
                     statusDot = 'bg-barber-accent';
                   }
 
+                  const isSelected = selectedBarberId === barber.id;
+
                   return (
                     <div
                       key={barber.id}
-                      className="bg-zinc-950/20 border border-barber-border rounded-xl p-4 flex items-center justify-between gap-4"
+                      onClick={() => {
+                        if (isAvailable) {
+                          setSelectedBarberId(barber.id);
+                          const services = barber.servicosConfig || SERVICES;
+                          if (services.length > 0) {
+                            setSelectedService(services[0].name);
+                          }
+                        }
+                      }}
+                      className={`border rounded-xl p-4 flex items-center justify-between gap-4 transition-all ${
+                        isAvailable 
+                          ? isSelected
+                            ? 'bg-barber-accent/5 border-barber-accent cursor-pointer'
+                            : 'bg-zinc-950/20 border-barber-border hover:border-zinc-700/60 cursor-pointer'
+                          : 'bg-zinc-950/10 border-barber-border/40 opacity-60 cursor-not-allowed'
+                      }`}
                     >
                       <div className="min-w-0">
                         <h4 className="font-extrabold text-sm text-zinc-200 truncate">{barber.nome}</h4>
@@ -479,20 +497,9 @@ export default function PublicBookingView() {
                       </div>
 
                       {isAvailable && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedBarberId(barber.id);
-                            const services = barber.servicosConfig || SERVICES;
-                            if (services.length > 0) {
-                              setSelectedService(services[0].name);
-                            }
-                            setShowQueueJoinModal(true);
-                          }}
-                          className="bg-barber-accent hover:bg-barber-accent-hover text-white text-[10px] font-bold uppercase py-2 px-3.5 rounded-lg active:scale-95 transition-all cursor-pointer shadow-sm shadow-barber-accent/15"
-                        >
-                          Entrar
-                        </button>
+                        <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? 'border-barber-accent bg-barber-accent' : 'border-zinc-700'}`}>
+                          {isSelected && <Check className="w-2.5 h-2.5 text-white" />}
+                        </div>
                       )}
                     </div>
                   );
@@ -503,90 +510,79 @@ export default function PublicBookingView() {
           </div>
         </div>
 
-        {showQueueJoinModal && (
-          <div className="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-barber-card border border-barber-border rounded-2xl shadow-2xl p-6 space-y-5 fade-in max-h-[90vh] overflow-y-auto no-scrollbar">
-              
-              <div className="flex justify-between items-center select-none border-b border-barber-border/40 pb-3">
-                <h3 className="text-sm font-extrabold text-zinc-100 uppercase tracking-wider">Entrar na Fila Virtual</h3>
-                <button
-                  type="button"
-                  onClick={() => setShowQueueJoinModal(false)}
-                  className="text-zinc-550 hover:text-zinc-350 p-1 cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
+        {/* Inline Join Form Card */}
+        <div className="w-full max-w-md bg-barber-card border border-barber-border rounded-2xl shadow-xl p-5 fade-in">
+          <form onSubmit={handleJoinQueueSubmit} className="space-y-4">
+            <span className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest block select-none">
+              Entrar na Fila Virtual
+            </span>
 
-              <form onSubmit={handleJoinQueueSubmit} className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">Nome Completo</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Digite seu nome"
-                    value={clientName}
-                    onChange={(e) => setClientName(e.target.value)}
-                    className="w-full bg-barber-dark border border-barber-border rounded-xl py-2.5 px-3 text-xs text-zinc-200"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">Celular / WhatsApp</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="(93) 99199-0984"
-                    value={clientPhone}
-                    onChange={handlePhoneChange}
-                    className="w-full bg-barber-dark border border-barber-border rounded-xl py-2.5 px-3 text-xs text-zinc-200"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">Selecione o Serviço</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {((shopBarbers.find(b => b.id === selectedBarberId) || barberInfo)?.servicosConfig || SERVICES).map((service) => (
-                      <div
-                        key={service.name}
-                        onClick={() => setSelectedService(service.name)}
-                        className={`border rounded-xl p-3 cursor-pointer transition-all flex flex-col justify-between ${
-                          selectedService === service.name
-                            ? 'border-barber-accent bg-barber-accent/5'
-                            : 'border-barber-border bg-zinc-900/10 hover:border-zinc-700/60'
-                        }`}
-                      >
-                        <span className="text-[10.5px] font-bold text-zinc-200">{service.name}</span>
-                        <div className="flex justify-between items-center mt-2 text-[9px] text-zinc-550">
-                          <span>{service.duration} min</span>
-                          <span className="font-bold text-barber-accent-light">{service.price}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full bg-barber-accent hover:bg-barber-accent-hover text-white py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-barber-accent/15 mt-2"
-                >
-                  {submitting ? (
-                    <>
-                      <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      Entrando na fila...
-                    </>
-                  ) : (
-                    <>
-                      <Check className="w-4 h-4" />
-                      Confirmar Entrada na Fila
-                    </>
-                  )}
-                </button>
-              </form>
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">Nome Completo</label>
+              <input
+                type="text"
+                required
+                placeholder="Digite seu nome"
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+                className="w-full bg-barber-dark border border-barber-border rounded-xl py-2.5 px-3 text-xs text-zinc-200"
+              />
             </div>
-          </div>
-        )}
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">Celular / WhatsApp</label>
+              <input
+                type="text"
+                required
+                placeholder="(93) 99199-0984"
+                value={clientPhone}
+                onChange={handlePhoneChange}
+                className="w-full bg-barber-dark border border-barber-border rounded-xl py-2.5 px-3 text-xs text-zinc-200"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">Selecione o Serviço</label>
+              <div className="grid grid-cols-2 gap-2">
+                {((shopBarbers.find(b => b.id === selectedBarberId) || barberInfo)?.servicosConfig || SERVICES).map((service) => (
+                  <div
+                    key={service.name}
+                    onClick={() => setSelectedService(service.name)}
+                    className={`border rounded-xl p-3 cursor-pointer transition-all flex flex-col justify-between ${
+                      selectedService === service.name
+                        ? 'border-barber-accent bg-barber-accent/5'
+                        : 'border-barber-border bg-zinc-900/10 hover:border-zinc-700/60'
+                    }`}
+                  >
+                    <span className="text-[10.5px] font-bold text-zinc-200">{service.name}</span>
+                    <div className="flex justify-between items-center mt-2 text-[9px] text-zinc-550">
+                      <span>{service.duration} min</span>
+                      <span className="font-bold text-barber-accent-light">{service.price}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full bg-barber-accent hover:bg-barber-accent-hover text-white py-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-barber-accent/15 mt-2"
+            >
+              {submitting ? (
+                <>
+                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Entrando na fila...
+                </>
+              ) : (
+                <>
+                  <Check className="w-4 h-4" />
+                  Confirmar Entrada na Fila
+                </>
+              )}
+            </button>
+          </form>
+        </div>
       </div>
     );
   };
