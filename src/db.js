@@ -25,6 +25,7 @@ const mapUser = (u) => {
     email: u.email,
     barbeariaName: u.barbearia_name,
     role: u.role,
+    telefone: u.telefone || '',
     horaInicio: u.hora_inicio || '08:00',
     horaFim: u.hora_fim || '20:00',
     servicosConfig: u.servicos_config || [
@@ -594,7 +595,7 @@ export const db = {
   getBarberPublicInfo: async (barberId) => {
     const { data, error } = await supabase
       .from('usuarios')
-      .select('nome, barbearia_name, hora_inicio, hora_fim, servicos_config')
+      .select('nome, barbearia_name, hora_inicio, hora_fim, servicos_config, telefone')
       .eq('id', barberId)
       .eq('role', 'barbeiro')
       .maybeSingle();
@@ -643,6 +644,7 @@ export const db = {
     const { data, error } = await supabase
       .from('usuarios')
       .update({
+        telefone: config.telefone,
         hora_inicio: config.horaInicio,
         hora_fim: config.horaFim,
         servicos_config: config.servicosConfig

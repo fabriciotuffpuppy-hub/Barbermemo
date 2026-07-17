@@ -25,6 +25,7 @@ export function AuthProvider({ children }) {
                 email: data.email,
                 barbeariaName: data.barbearia_name,
                 role: data.role,
+                telefone: data.telefone || '',
                 horaInicio: data.hora_inicio || '08:00',
                 horaFim: data.hora_fim || '20:00',
                 servicosConfig: data.servicos_config || [
@@ -60,6 +61,7 @@ export function AuthProvider({ children }) {
             email: data.email,
             barbeariaName: data.barbearia_name,
             role: data.role,
+            telefone: data.telefone || '',
             horaInicio: data.hora_inicio || '08:00',
             horaFim: data.hora_fim || '20:00',
             servicosConfig: data.servicos_config || [

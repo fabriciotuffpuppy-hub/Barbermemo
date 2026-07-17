@@ -259,7 +259,12 @@ export default function PublicBookingView() {
             <button
               onClick={() => {
                 const message = `Olá, ${barberInfo.nome}! Acabei de solicitar um agendamento pelo link:\n\n- *Cliente:* ${clientName}\n- *Serviço:* ${selectedService}\n- *Data/Hora:* ${successData.dateFormatted} às ${successData.time}\n\nPor favor, confirme no seu painel!`;
-                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+                const barberPhone = barberInfo.telefone ? barberInfo.telefone.replace(/\D/g, '') : '';
+                const cleanPhone = barberPhone.startsWith('55') ? barberPhone : `55${barberPhone}`;
+                const url = barberPhone
+                  ? `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(message)}`
+                  : `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
               }}
               className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-emerald-950/20"
             >

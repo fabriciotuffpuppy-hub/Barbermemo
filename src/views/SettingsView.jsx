@@ -16,6 +16,21 @@ export default function SettingsView() {
   const { currentUser, setCurrentUser } = useAuth();
   const navigate = useNavigate();
 
+  // Phone formatting helper
+  const formatPhone = (val) => {
+    let value = (val || '').replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    if (value.length > 6) {
+      return `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+    } else if (value.length > 2) {
+      return `(${value.slice(0, 2)}) ${value.slice(2)}`;
+    } else if (value.length > 0) {
+      return `(${value}`;
+    }
+    return value;
+  };
+
+  const [telefone, setTelefone] = useState(() => formatPhone(currentUser?.telefone || ''));
   const [horaInicio, setHoraInicio] = useState(currentUser?.horaInicio || '08:00');
   const [horaFim, setHoraFim] = useState(currentUser?.horaFim || '20:00');
   const [servicos, setServicos] = useState(() => currentUser?.servicosConfig || []);
@@ -23,6 +38,10 @@ export default function SettingsView() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  const handlePhoneChange = (e) => {
+    setTelefone(formatPhone(e.target.value));
+  };
 
   // Inline service editor states
   const [editingIdx, setEditingIdx] = useState(null); // index or 'new'
@@ -88,6 +107,12 @@ export default function SettingsView() {
       return;
     }
 
+    const cleanPhone = telefone.replace(/\D/g, '');
+    if (cleanPhone && cleanPhone.length < 10) {
+      setError('Por favor, insira um número de WhatsApp válido.');
+      return;
+    }
+
     const startH = parseInt(horaInicio.split(':')[0], 10);
     const endH = parseInt(horaFim.split(':')[0], 10);
 
@@ -102,6 +127,7 @@ export default function SettingsView() {
 
     try {
       const updatedUser = await db.updateBarberConfig(currentUser.id, {
+        telefone: cleanPhone,
         horaInicio,
         horaFim,
         servicosConfig: servicos
@@ -146,6 +172,28 @@ export default function SettingsView() {
         
         {/* Form panel */}
         <form onSubmit={handleSaveAllConfig} className="space-y-6">
+
+          {/* WhatsApp Contact Config */}
+          <div className="bg-barber-card border border-barber-border rounded-xl p-5 space-y-4 shadow-md">
+            <div className="flex items-center gap-2 text-barber-accent-light select-none">
+              <Settings className="w-4 h-4" />
+              <h3 className="text-xs font-bold uppercase tracking-wider">WhatsApp para Contato</h3>
+            </div>
+            <p className="text-[11px] text-zinc-500 leading-relaxed select-none">
+              Insira seu número de WhatsApp. O cliente será redirecionado para este número ao clicar em "Enviar Aviso por WhatsApp" no fim do agendamento público.
+            </p>
+
+            <div className="space-y-1.5">
+              <label className="text-[10.5px] font-semibold text-zinc-400 font-sans block">Seu WhatsApp</label>
+              <input
+                type="text"
+                placeholder="Ex: (93) 99199-0984"
+                value={telefone}
+                onChange={handlePhoneChange}
+                className="w-full bg-barber-dark border border-barber-border rounded-lg py-2 px-3 text-xs text-zinc-200 placeholder:text-zinc-700"
+              />
+            </div>
+          </div>
 
           {/* 1. Working Hours Config */}
           <div className="bg-barber-card border border-barber-border rounded-xl p-5 space-y-4 shadow-md">
