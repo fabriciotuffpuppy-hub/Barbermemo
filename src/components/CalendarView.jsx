@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import {
   ChevronLeft, ChevronRight, Calendar, Clock, Plus, Check, X,
-  User, UserCheck, Scissors, ExternalLink, RefreshCw
+  User, UserCheck, Scissors, ExternalLink, RefreshCw, MessageSquare
 } from 'lucide-react';
 import { db } from '../db';
 
@@ -413,9 +413,22 @@ export default function CalendarView() {
                   <span className="text-[10px] text-zinc-500 uppercase font-black tracking-wider select-none">Cliente</span>
                   <span className="font-bold text-sm text-zinc-200 block truncate">{selectedApp.cliente ? selectedApp.cliente.nome : 'Cliente Desconhecido'}</span>
                   {selectedApp.cliente && selectedApp.cliente.telefone && (
-                    <span className="text-xs text-zinc-400 block mt-0.5 select-all">
-                      {selectedApp.cliente.telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')}
-                    </span>
+                    <div className="flex items-center gap-1.5 mt-0.5 select-none">
+                      <span className="text-xs text-zinc-400 select-all">
+                        {selectedApp.cliente.telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')}
+                      </span>
+                      <a
+                        href={`https://api.whatsapp.com/send?phone=55${selectedApp.cliente.telefone.replace(/\D/g, '')}&text=${encodeURIComponent(
+                          `Olá, ${selectedApp.cliente.nome}! Aqui é o ${currentUser?.nome}${currentUser?.barbeariaName ? ` da ${currentUser.barbeariaName}` : ''}. Estou entrando em contato sobre o seu agendamento no dia ${new Date(selectedApp.dataHora).toLocaleDateString('pt-BR')} às ${new Date(selectedApp.dataHora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}.`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-emerald-500 hover:text-emerald-400 transition-colors p-0.5 rounded hover:bg-zinc-800/60"
+                        title="Enviar mensagem no WhatsApp"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
                   )}
                 </div>
               </div>

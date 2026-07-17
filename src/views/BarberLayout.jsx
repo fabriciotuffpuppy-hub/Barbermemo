@@ -6,7 +6,7 @@ import { useAgendamentos } from '../hooks/useAgendamentos';
 import {
   Scissors, LogOut, Search, X, Users, Scissors as CutsIcon,
   TrendingUp, Clock, Plus, Check, UserCheck, Calendar, CalendarDays,
-  UserPlus, BarChart3, AlertCircle, Phone, ChevronLeft, Settings
+  UserPlus, BarChart3, AlertCircle, Phone, ChevronLeft, Settings, MessageSquare
 } from 'lucide-react';
 
 export default function BarberLayout() {
@@ -483,7 +483,20 @@ export default function BarberLayout() {
                         <div className="flex justify-between items-center text-[10px] text-zinc-500">
                           <span>{ag.servicos}</span>
 
-                          <div className="flex gap-1" onClick={e => e.stopPropagation()}>
+                          <div className="flex gap-2 items-center" onClick={e => e.stopPropagation()}>
+                            {ag.cliente && ag.cliente.telefone && (
+                              <a
+                                href={`https://api.whatsapp.com/send?phone=55${ag.cliente.telefone.replace(/\D/g, '')}&text=${encodeURIComponent(
+                                  `Olá, ${clientName}! Aqui é o ${currentUser?.nome}${currentUser?.barbeariaName ? ` da ${currentUser.barbeariaName}` : ''}. Estou entrando em contato sobre o seu agendamento no dia ${new Date(ag.dataHora).toLocaleDateString('pt-BR')} às ${formatTime(ag.dataHora)}.`
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-emerald-500 hover:text-emerald-450 p-0.5 cursor-pointer"
+                                title="Falar no WhatsApp"
+                              >
+                                <MessageSquare className="w-3 h-3" />
+                              </a>
+                            )}
                             {ag.status !== 'Concluído' && (
                               <button
                                 onClick={() => {
