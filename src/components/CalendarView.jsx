@@ -461,6 +461,19 @@ export default function CalendarView() {
 
               {/* Actions */}
               <div className="space-y-2 pt-2 select-none">
+                {selectedApp.cliente && selectedApp.cliente.telefone && (
+                  <a
+                    href={`https://api.whatsapp.com/send?phone=55${selectedApp.cliente.telefone.replace(/\D/g, '')}&text=${encodeURIComponent(
+                      `Olá, ${selectedApp.cliente.nome}! Aqui é o ${currentUser?.nome}${currentUser?.barbeariaName ? ` da ${currentUser.barbeariaName}` : ''}. Estou entrando em contato sobre o seu agendamento no dia ${new Date(selectedApp.dataHora).toLocaleDateString('pt-BR')} às ${new Date(selectedApp.dataHora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md shadow-emerald-950/20"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 fill-white text-emerald-600" />
+                    Enviar Mensagem no WhatsApp
+                  </a>
+                )}
                 <div className="flex gap-2">
                   {selectedApp.status !== 'Concluído' && (
                     <button

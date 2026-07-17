@@ -491,10 +491,11 @@ export default function BarberLayout() {
                                 )}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-emerald-500 hover:text-emerald-450 p-0.5 cursor-pointer"
+                                className="flex items-center gap-1 text-[9px] bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20 px-1.5 py-0.5 rounded transition-all font-semibold cursor-pointer"
                                 title="Falar no WhatsApp"
                               >
                                 <MessageSquare className="w-3 h-3" />
+                                WhatsApp
                               </a>
                             )}
                             {ag.status !== 'Concluído' && (
