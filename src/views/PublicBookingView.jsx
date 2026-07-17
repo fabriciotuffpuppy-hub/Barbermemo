@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Calendar, Clock, User, Phone, CheckCircle2, Scissors,
-  AlertCircle, MessageSquare, ChevronLeft, Coffee, HelpCircle, Users, CheckCircle
+  AlertCircle, MessageSquare, ChevronLeft, Coffee, HelpCircle, Users, CheckCircle, Check
 } from 'lucide-react';
 import { db } from '../db';
 
@@ -303,13 +303,13 @@ export default function PublicBookingView() {
       if (positionInLine !== null) {
         const frontPeople = waitingList.slice(0, myIndexInWaiting);
         estimatedWait = frontPeople.reduce((acc, app) => {
-          const d = (targetBarber?.servicosConfig || []).find(s => s.name === app.servicos)?.duration || 40;
+          const d = (targetBarber?.servicos_config || []).find(s => s.name === app.servicos)?.duration || 40;
           return acc + d;
         }, 0);
         
         const activeApp = queueList.find(app => app.status === 'Confirmado');
         if (activeApp) {
-          estimatedWait += (targetBarber?.servicosConfig || []).find(s => s.name === activeApp.servicos)?.duration || 40;
+          estimatedWait += (targetBarber?.servicos_config || []).find(s => s.name === activeApp.servicos)?.duration || 40;
         }
       }
 
@@ -436,13 +436,13 @@ export default function PublicBookingView() {
                   const waitingCount = queueList.filter(app => app.status === 'Pendente').length;
                   
                   const waitTime = queueList.filter(app => app.status === 'Pendente').reduce((acc, app) => {
-                    const d = (barber.servicosConfig || []).find(s => s.name === app.servicos)?.duration || 40;
+                    const d = (barber.servicos_config || []).find(s => s.name === app.servicos)?.duration || 40;
                     return acc + d;
                   }, 0) + (queueList.find(app => app.status === 'Confirmado') ? 30 : 0);
 
-                  const isAvailable = barber.statusFila === 'disponivel';
-                  const isLunch = barber.statusFila === 'almoco';
-                  const isPausa = barber.statusFila === 'pausa';
+                  const isAvailable = barber.status_fila === 'disponivel';
+                  const isLunch = barber.status_fila === 'almoco';
+                  const isPausa = barber.status_fila === 'pausa';
                   
                   let statusText = 'Livre - Sem fila!';
                   let statusColor = 'text-emerald-400';
@@ -456,7 +456,7 @@ export default function PublicBookingView() {
                     statusText = 'Em Pausa / Café';
                     statusColor = 'text-orange-500';
                     statusDot = 'bg-orange-500';
-                  } else if (barber.statusFila === 'ausente') {
+                  } else if (barber.status_fila === 'ausente') {
                     statusText = 'Ausente / Indisponível';
                     statusColor = 'text-red-500';
                     statusDot = 'bg-red-500';
@@ -474,7 +474,7 @@ export default function PublicBookingView() {
                       onClick={() => {
                         if (isAvailable) {
                           setSelectedBarberId(barber.id);
-                          const services = barber.servicosConfig || SERVICES;
+                          const services = barber.servicos_config || SERVICES;
                           if (services.length > 0) {
                             setSelectedService(services[0].name);
                           }
@@ -544,7 +544,7 @@ export default function PublicBookingView() {
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">Selecione o Serviço</label>
               <div className="grid grid-cols-2 gap-2">
-                {((shopBarbers.find(b => b.id === selectedBarberId) || barberInfo)?.servicosConfig || SERVICES).map((service) => (
+                {((shopBarbers.find(b => b.id === selectedBarberId) || barberInfo)?.servicos_config || SERVICES).map((service) => (
                   <div
                     key={service.name}
                     onClick={() => setSelectedService(service.name)}

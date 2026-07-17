@@ -28,6 +28,8 @@ export function AuthProvider({ children }) {
                 telefone: data.telefone || '',
                 horaInicio: data.hora_inicio || '08:00',
                 horaFim: data.hora_fim || '20:00',
+                modeloAtendimento: data.modelo_atendimento || 'agenda',
+                statusFila: data.status_fila || 'disponivel',
                 servicosConfig: data.servicos_config || [
                   { name: 'Corte', duration: 40, price: 'R$ 40,00' },
                   { name: 'Barba', duration: 30, price: 'R$ 30,00' },
@@ -64,6 +66,8 @@ export function AuthProvider({ children }) {
             telefone: data.telefone || '',
             horaInicio: data.hora_inicio || '08:00',
             horaFim: data.hora_fim || '20:00',
+            modeloAtendimento: data.modelo_atendimento || 'agenda',
+            statusFila: data.status_fila || 'disponivel',
             servicosConfig: data.servicos_config || [
               { name: 'Corte', duration: 40, price: 'R$ 40,00' },
               { name: 'Barba', duration: 30, price: 'R$ 30,00' },
