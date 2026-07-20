@@ -1,15 +1,15 @@
-const ASAAS_API_URL = process.env.ASAAS_API_URL || 'https://sandbox.asaas.com/api/v3';
-const ASAAS_API_KEY = process.env.ASAAS_API_KEY || '';
-
 export async function asaasFetch(path, options = {}) {
-  const res = await fetch(`${ASAAS_API_URL}${path}`, {
+  const apiUrl = process.env.ASAAS_API_URL || process.env.VITE_ASAAS_API_URL || 'https://sandbox.asaas.com/api/v3';
+  const apiKey = (process.env.ASAAS_API_KEY || process.env.VITE_ASAAS_API_KEY || '').trim();
+
+  const res = await fetch(`${apiUrl}${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
       // Asaas rejects requests without a User-Agent (returns invalid_access_token
       // instead of a clearer error), and Node's fetch sends none by default.
       'User-Agent': 'Barbermemo/1.0',
-      access_token: ASAAS_API_KEY,
+      access_token: apiKey,
       ...options.headers
     }
   });
@@ -27,13 +27,17 @@ export async function asaasFetch(path, options = {}) {
   return data;
 }
 
-// Creates or updates the Asaas customer for a local `cliente` row.
+
+// Creates or updates the Asaas customer for a local `cliente` / `usuarios` row.
 export async function upsertAsaasCustomer(cliente) {
+  const cleanCpfCnpj = cliente.cpf_cnpj ? String(cliente.cpf_cnpj).replace(/\D/g, '') : undefined;
+  const cleanPhone = cliente.telefone ? String(cliente.telefone).replace(/\D/g, '') : undefined;
+
   const payload = {
     name: cliente.nome,
-    cpfCnpj: cliente.cpf_cnpj || undefined,
+    cpfCnpj: cleanCpfCnpj || undefined,
     email: cliente.email || undefined,
-    mobilePhone: cliente.telefone || undefined,
+    mobilePhone: cleanPhone || undefined,
     externalReference: cliente.id
   };
 
@@ -49,3 +53,4 @@ export async function upsertAsaasCustomer(cliente) {
     body: JSON.stringify(payload)
   });
 }
+
