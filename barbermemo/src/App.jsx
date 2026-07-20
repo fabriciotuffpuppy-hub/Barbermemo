@@ -15,6 +15,8 @@ import MetricsView from './components/MetricsView';
 import PublicBookingView from './views/PublicBookingView';
 import SettingsView from './views/SettingsView';
 import QueueDashboard from './views/QueueDashboard';
+import CheckoutView from './views/CheckoutView';
+import SignupView from './views/SignupView';
 
 const ScheduleRouteWrapper = () => {
   const { currentUser } = useAuth();
@@ -35,11 +37,15 @@ function AppRoutes() {
 
   return (
     <Routes>
-      {/* Auth Route */}
+      {/* Auth Routes */}
       <Route path="/login" element={<LoginView />} />
+      <Route path="/checkout" element={<CheckoutView />} />
+      <Route path="/cadastrar" element={<SignupView />} />
+      <Route path="/cadastro" element={<SignupView />} />
 
       {/* Public Booking Route */}
       <Route path="/agendar/:barberId" element={<PublicBookingView />} />
+
 
       {/* SaaS Admin Portal */}
       <Route

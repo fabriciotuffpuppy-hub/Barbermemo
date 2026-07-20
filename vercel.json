@@ -4,8 +4,9 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/(login|admin|dashboard|agendar/.*|agendamentos.*|metrics|settings|clientes.*|app.*)",
+      "source": "/(login|checkout|cadastrar|cadastro|admin|dashboard|agendar/.*|agendamentos.*|metrics|settings|clientes.*|app.*)",
       "destination": "/app.html"
     }
+
   ]
 }

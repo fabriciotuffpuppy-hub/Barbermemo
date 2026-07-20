@@ -25,6 +25,9 @@ const mapUser = (u) => {
     email: u.email,
     barbeariaName: u.barbearia_name,
     role: u.role,
+    plano: u.plano || (u.role === 'admin' ? 'barbearia' : 'autonomo'),
+    statusAssinatura: u.status_assinatura || 'active',
+    subscriptionId: u.subscription_id || null,
     cpfCnpj: u.cpf_cnpj || '',
     asaasCustomerId: u.asaas_customer_id || null,
     telefone: u.telefone || '',
@@ -42,6 +45,7 @@ const mapUser = (u) => {
     ]
   };
 };
+
 
 const mapClient = (c) => {
   if (!c) return null;
@@ -101,6 +105,105 @@ export const db = {
     if (error) throw error;
     return mapUser(data);
   },
+
+  registerUserFromSubscription: async ({ nome, email, senha, plano, barbeariaName, cpfCnpj, telefone, subscriptionId }) => {
+    if (!subscriptionId) {
+      throw new Error('É necessário ter uma assinatura válida no Asaas para criar uma conta.');
+    }
+
+    // 0. Verify subscription payment status with server backend
+    try {
+      const res = await fetch(`/api/asaas/verify-subscription?subscriptionId=${subscriptionId}`);
+      const data = await res.json();
+      if (!res.ok || !data.valid) {
+        throw new Error(data.message || data.error || 'Assinatura pendente de pagamento no Asaas ou já utilizada.');
+      }
+    } catch (err) {
+      if (err.message && (err.message.includes('Assinatura') || err.message.includes('já utilizada'))) throw err;
+      throw new Error('Não foi possível validar a assinatura no Asaas: ' + err.message);
+    }
+
+    const cleanEmail = email.toLowerCase().trim();
+    const role = plano === 'barbearia' ? 'admin' : 'barbeiro';
+
+    // 1. Check if email exists
+
+    const { data: existing } = await supabase
+      .from('usuarios')
+      .select('id')
+      .eq('email', cleanEmail)
+      .maybeSingle();
+
+    if (existing) {
+      throw new Error('Já existe uma conta cadastrada com este e-mail.');
+    }
+
+    // 2. Sign up with Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: cleanEmail,
+      password: senha,
+      options: {
+        data: {
+          nome,
+          barbearia_name: barbeariaName || (plano === 'barbearia' ? 'Minha Barbearia' : ''),
+          role
+        }
+      }
+    });
+
+    if (authError) throw authError;
+    if (!authData.user) {
+      throw new Error('Não foi possível registrar a conta de acesso.');
+    }
+
+    const userId = authData.user.id;
+
+    // 3. Upsert profile details into public.usuarios
+    const profilePayload = {
+      id: userId,
+      nome,
+      email: cleanEmail,
+      barbearia_name: barbeariaName || (plano === 'barbearia' ? 'Minha Barbearia' : null),
+      role,
+      plano,
+      subscription_id: subscriptionId || null,
+      status_assinatura: 'active',
+      cpf_cnpj: cpfCnpj ? String(cpfCnpj).replace(/\D/g, '') : null,
+      telefone: telefone || null
+    };
+
+    const { data: updatedProfile, error: profileError } = await supabase
+      .from('usuarios')
+      .upsert(profilePayload)
+      .select()
+      .single();
+
+    if (profileError) {
+      console.error('Erro ao atualizar perfil:', profileError);
+    }
+
+    // 4. Update assinaturas_asaas
+    if (subscriptionId) {
+      await supabase
+        .from('assinaturas_asaas')
+        .update({
+          usuario_id: userId,
+          usado_para_cadastro: true,
+          status: 'ACTIVE'
+        })
+        .eq('id', subscriptionId);
+    }
+
+    // 5. Automatically log in user
+    await supabase.auth.signInWithPassword({
+      email: cleanEmail,
+      password: senha
+    });
+
+    return mapUser(updatedProfile || profilePayload);
+  },
+
+
 
   // Admin APIs
   adminGetBarbeiros: async () => {

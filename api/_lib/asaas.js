@@ -54,3 +54,32 @@ export async function upsertAsaasCustomer(cliente) {
   });
 }
 
+// Creates a monthly subscription in Asaas for a customer
+export async function createAsaasSubscription({ customerId, value, description, billingType = 'UNDEFINED', externalReference }) {
+  const payload = {
+    customer: customerId,
+    billingType: billingType,
+    value: value,
+    nextDueDate: new Date(Date.now() + 86400000).toISOString().split('T')[0], // Due tomorrow for initial setup or immediate checkout
+    cycle: 'MONTHLY',
+    description: description,
+    externalReference: externalReference
+  };
+
+  return asaasFetch('/subscriptions', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+}
+
+// Fetches a subscription from Asaas
+export async function getAsaasSubscription(subscriptionId) {
+  return asaasFetch(`/subscriptions/${subscriptionId}`);
+}
+
+// Fetches payments associated with a subscription
+export async function getAsaasSubscriptionPayments(subscriptionId) {
+  return asaasFetch(`/subscriptions/${subscriptionId}/payments`);
+}
+
+

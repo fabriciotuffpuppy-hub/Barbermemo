@@ -25,3 +25,12 @@ export async function getAuthedContext(req) {
 
   return { supabase, user: data.user };
 }
+
+// Service client for unauthenticated server operations (e.g. Asaas Webhook)
+export function getAdminSupabase() {
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || supabaseAnonKey;
+  return createClient(supabaseUrl, serviceKey, {
+    auth: { persistSession: false, autoRefreshToken: false }
+  });
+}
+

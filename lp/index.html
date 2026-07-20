@@ -707,7 +707,7 @@
             </li>
           </ul>
 
-          <a href="https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Mensal%20Autônomo%20do%20BarberMemo%20(R$%2059,90/mês)%20para%20começar%20meu%20teste%20grátis." target="_blank" id="price-autonomo-btn" class="btn btn-secondary btn-full">Experimentar 7 Dias Grátis</a>
+          <a href="/checkout?plano=autonomo" id="price-autonomo-btn" class="btn btn-secondary btn-full">Assinar Plano Autônomo</a>
           <span class="pricing-footer-note">Cancele quando quiser. Sem taxas de cancelamento.</span>
         </div>
 
@@ -761,8 +761,9 @@
             </li>
           </ul>
 
-          <a href="https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Mensal%20Barbearia%20do%20BarberMemo%20(R$%20189,99/mês)%20para%20começar%20nosso%20teste%20de%20equipe." target="_blank" id="price-barbearia-btn" class="btn btn-primary btn-full">Adquirir Plano Barbearia</a>
+          <a href="/checkout?plano=barbearia" id="price-barbearia-btn" class="btn btn-primary btn-full">Adquirir Plano Barbearia</a>
           <span class="pricing-footer-note">Sem taxa de adesão ou taxas ocultas.</span>
+
         </div>
       </div>
     </div>
@@ -902,12 +903,12 @@
         // Update Autônomo Price (Annual view)
         priceAutonomoVal.textContent = '39,90';
         priceAutonomoNote.textContent = 'R$ 478,80 cobrados anualmente (12x R$ 39,90)';
-        priceAutonomoBtn.href = "https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Quero%20adquirir%20o%20Plano%20Anual%20Autônomo%20do%20BarberMemo%20(12x%20de%20R$%2039,90)%20com%2033%25%20de%20desconto.";
+        priceAutonomoBtn.href = "/checkout?plano=autonomo";
         
         // Update Barbearia Price (Annual view)
         priceBarbeariaVal.textContent = '126,90';
         priceBarbeariaNote.textContent = 'R$ 1.522,80 cobrados anualmente (12x R$ 126,90)';
-        priceBarbeariaBtn.href = "https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Quero%20adquirir%20o%20Plano%20Anual%20Barbearia%20do%20BarberMemo%20(12x%20de%20R$%20126,90)%20com%2020%25%20de%20desconto.";
+        priceBarbeariaBtn.href = "/checkout?plano=barbearia";
       } else {
         pricingSwitch.classList.remove('active');
         labelMonthly.classList.add('active');
@@ -916,13 +917,14 @@
         // Update Autônomo Price (Monthly view)
         priceAutonomoVal.textContent = '59,90';
         priceAutonomoNote.textContent = 'Faturamento mensal, sem fidelidade';
-        priceAutonomoBtn.href = "https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Mensal%20Autônomo%20do%20BarberMemo%20(R$%2059,90/mês)%20para%20começar%20meu%20teste%20grátis.";
+        priceAutonomoBtn.href = "/checkout?plano=autonomo";
         
         // Update Barbearia Price (Monthly view)
         priceBarbeariaVal.textContent = '189,99';
         priceBarbeariaNote.textContent = 'Faturamento mensal, sem fidelidade';
-        priceBarbeariaBtn.href = "https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Mensal%20Barbearia%20do%20BarberMemo%20(R$%20189,99/mês)%20para%20começar%20nosso%20teste%20de%20equipe.";
+        priceBarbeariaBtn.href = "/checkout?plano=barbearia";
       }
+
     }
 
     pricingSwitch.addEventListener('click', togglePricing);
