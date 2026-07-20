@@ -1,0 +1,122 @@
+# Barbermemo 💈
+
+O **Barbermemo** é um sistema completo e moderno de gestão para barbearias e barbeiros independentes. Ele funciona como uma "memória inteligente" para o profissional, permitindo o registro detalhado de clientes, o histórico visual e técnico de cada corte (como degradê, topo, produtos e fotos), agendamentos e uma estimativa preditiva de retorno dos clientes.
+
+Tudo isso integrado ao **Supabase** (banco de dados e armazenamento de imagens) com uma interface rápida e responsiva construída em **React**, **Vite** e **Tailwind CSS**.
+
+---
+
+## 🚀 Principais Funcionalidades
+
+### 1. Níveis de Acesso (Roles)
+*   **Administrador (Admin):**
+    *   Cadastro, edição e remoção de barbeiros associados à barbearia.
+    *   Acesso a um painel de métricas globais (total de barbeiros, clientes cadastrados, atendimentos realizados e agendamentos).
+*   **Barbeiro:**
+    *   Dashboard personalizado com métricas individuais.
+    *   Gestão de seus próprios clientes e agenda de atendimentos.
+
+### 2. Gestão de Clientes e Próximos Retornos
+*   **Perfil do Cliente:** Cadastro de nome, telefone e intervalo personalizado de retorno (ex: a cada 20 ou 30 dias).
+*   **Cálculo Preditivo de Retorno:** O sistema monitora a data do último corte do cliente e o seu intervalo de retorno. Ele avisa automaticamente quem já está no período de voltar ou com o corte atrasado, facilitando ações de pós-venda.
+
+### 3. Registro Detalhado de Atendimentos
+Para cada atendimento realizado, o barbeiro pode registrar a "fórmula" do corte:
+*   **Laterais:** Detalhes da lateral (ex: fade na 0, tesoura, etc.).
+*   **Topo:** Detalhes da parte superior (ex: tamanho, textura, franja).
+*   **Barba:** Estilo e detalhes da barba.
+*   **Produtos:** Produtos utilizados ou adquiridos pelo cliente.
+*   **Fotos do Corte:** Upload de fotos diretamente do celular ou computador. As imagens são **comprimidas automaticamente no navegador** para economizar dados e armazenamento antes de serem salvas no Supabase Storage.
+
+### 4. Agenda e Compromissos
+*   Gerenciamento diário de horários.
+*   Status do agendamento: `Pendente`, `Confirmado` ou `Concluído`.
+*   **Automatização Inteligente:** Ao finalizar e registrar um atendimento para um cliente que possui um agendamento no dia de hoje, o sistema automaticamente marca o agendamento correspondente como **Concluído**.
+
+### 5. Estatísticas e Desempenho
+*   Métricas rápidas na tela inicial do barbeiro (clientes cadastrados, atendimentos no mês e atendimentos totais).
+*   Filtros dinâmicos e busca em tempo real por clientes.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+*   **Frontend:**
+    *   [React 19](https://react.dev/) - Biblioteca para construção de interfaces.
+    *   [Vite 8](https://vite.dev/) - Bundler rápido para desenvolvimento moderno.
+    *   [Tailwind CSS v4](https://tailwindcss.com/) - Estilização moderna e utilitária.
+    *   [Lucide React](https://lucide.dev/) - Ícones modernos e limpos.
+*   **Otimização:**
+    *   [browser-image-compression](https://www.npmjs.com/package/browser-image-compression) - Compressão de fotos do lado do cliente.
+*   **Backend & Banco de Dados:**
+    *   [Supabase](https://supabase.com/) - PostgreSQL como serviço, autenticação e gerenciamento de arquivos.
+
+---
+
+## 🗄️ Estrutura do Banco de Dados (Supabase)
+
+O banco de dados PostgreSQL do Supabase conta com as seguintes tabelas principais:
+
+### 1. `usuarios` (Barbeiros e Administradores)
+*   `id` (UUID, Primary Key)
+*   `nome` (Text)
+*   `email` (Text, Unique)
+*   `senha` (Text)
+*   `barbearia_name` (Text)
+*   `role` (Text - `'admin'` ou `'barbeiro'`)
+
+### 2. `clientes`
+*   `id` (UUID, Primary Key)
+*   `nome` (Text)
+*   `telefone` (Text)
+*   `intervalo_dias_retorno` (Integer - padrão `30`)
+*   `barber_id` (UUID, Foreign Key de `usuarios.id`)
+
+### 3. `atendimentos` (Histórico de Cortes)
+*   `id` (UUID, Primary Key)
+*   `cliente_id` (UUID, Foreign Key de `clientes.id` com deleção em cascata)
+*   `data` (Timestamp, padrão `now()`)
+*   `laterais` (Text)
+*   `topo` (Text)
+*   `barba` (Text)
+*   `produtos` (Text)
+*   `fotos` (Text[] - lista de URLs públicas do Storage)
+
+### 4. `agendamentos` (Agenda)
+*   `id` (UUID, Primary Key)
+*   `cliente_id` (UUID, Foreign Key de `clientes.id` com deleção em cascata)
+*   `data_hora` (Timestamp)
+*   `servicos` (Text - ex: 'Corte', 'Barba', 'Completo')
+*   `status` (Text - ex: 'Pendente', 'Confirmado', 'Concluído')
+*   `barber_id` (UUID, Foreign Key de `usuarios.id`)
+
+### 📂 Bucket de Armazenamento
+*   `barbermemo-photos` - Armazena as imagens anexadas a cada atendimento, organizadas por subpastas com o ID do barbeiro (`${barberId}/${fileName}`).
+
+---
+
+## ⚙️ Como Configurar e Executar Localmente
+
+### 1. Clonar o Repositório
+```bash
+git clone https://github.com/fabriciotuffpuppy-hub/Barbermemo.git
+cd Barbermemo/barbermemo
+```
+
+### 2. Instalar as Dependências
+```bash
+npm install
+```
+
+### 3. Configurar as Variáveis de Ambiente
+Crie um arquivo `.env.local` (ou `.env`) na raiz do diretório `barbermemo` baseado no arquivo `.env.example`:
+```env
+VITE_SUPABASE_URL=https://seu-projeto-supabase.supabase.co
+VITE_SUPABASE_ANON_KEY=sua-chave-anonima-aqui
+```
+
+### 4. Executar em Modo de Desenvolvimento
+```bash
+npm run dev
+```
+O servidor estará rodando em `http://localhost:5173`.

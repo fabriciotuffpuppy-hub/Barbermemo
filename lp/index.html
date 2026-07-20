@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary Meta Tags -->
+  <title>BarberMemo | Sistema de Gestão e Fidelização de Barbearia</title>
+  <meta name="title" content="BarberMemo | Sistema de Gestão e Fidelização de Barbearia">
+  <meta name="description"
+    content="O sistema de gestão e agenda inteligente para barbeiros. Ficha de cliente com fotos, alertas automáticos de retorno por WhatsApp e controle financeiro. Experimente 7 dias grátis.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background decorations -->
+  <div class="glow-bg-1"></div>
+  <div class="glow-bg-2"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 1018.56 1348.85" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <path fill="#D86902"
+              d="M1.35 725.89c33.15,34 74.13,246.09 79.7,293.76 11.14,95.22 7.58,170.92 8.81,265.17 0.54,41.43 30.13,73.65 75.88,59 39.06,-12.51 41.33,-54.28 43.91,-99.76 5.59,-98.85 -7.15,-169.1 -14.48,-263.24l53.74 -0.02c19.62,24.88 12.63,104.19 13.42,143.6l28.86 0.22c1.32,-16.89 -11.12,-182.82 28.16,-139.59 15.35,35.35 -0.06,95.62 5.17,137.46l26.48 1.85c2.6,-36.6 -3.5,-118.02 4.2,-142.68 13.08,-2.52 11.34,-4.99 24.51,3.07l1.93 138.43 21.09 0.55c2.83,-35.21 -2.83,-117.32 7.39,-142.31l18.69 -1.47c12.99,22.23 6.27,111.76 6.39,142.44l27.37 2.72c1.75,-37.48 -5.5,-114.11 4.26,-142.06 46.77,-9.67 20.22,49.19 27.63,139.8l27.81 1.91c1.66,-34.53 -3.57,-119.45 4.28,-142.08l24.72 -1.57c7.87,23.71 4.12,109.67 4.98,139.6 14.78,5.17 11.62,5.45 25.29,-0.5 2.92,-36.34 -4.37,-108.62 4.73,-137.9l21.85 -2.31c10.22,20.67 4.97,114.65 5.66,143.13l28.57 2.49c0.06,-34.81 -8.45,-121.81 7.22,-143.79l18.43 -0.76c13.48,27.63 5.42,106.63 5.88,141.85l27.45 1.54c2.7,-93.93 -15.52,-147.2 27.71,-143.7 10.47,23.9 3.41,106.72 4.78,141.76 69.91,10.13 51.4,-92.25 51.83,-173.53 0.51,-98.33 -11.05,-82.04 -149.87,-82.82 -87.99,-0.5 -411.62,4.61 -467.91,-1.11 -8.39,-34.77 -45.97,-139.22 -46.63,-159.09 -17.47,-18.06 -12.11,-39.47 -56.14,-62.34 -56.13,-4.84 -69.89,28.62 -63.74,82.27zm50.58 -0.46c-13.41,0 -24.28,-10.87 -24.28,-24.28 0,-13.41 10.87,-24.28 24.28,-24.28 13.41,0 24.28,10.87 24.28,24.28 0,13.41 -10.87,24.28 -24.28,24.28z" />
+            <path fill="#D86902"
+              d="M521.43 734.83c134.77,6.54 220.07,-13.87 303.86,70.63 158.91,160.26 51.84,424.09 -175.61,423.54 -53.11,-0.13 -348.48,-4.4 -375.47,1.61 1.14,64.3 -1.82,69.89 -22.4,115.69 75.84,3.3 425.87,5.49 483.81,-7.26 131.46,-28.94 224.89,-121.61 263.67,-238.02 66.4,-199.33 -44.98,-413.2 -240.34,-468.46 -72.24,-20.43 -162.24,-17.15 -238.7,-15.77l1.19 118.04z" />
+            <path fill="#F4F3F3"
+              d="M140.99 122.83c87.55,-8.05 210.34,-1.6 301.67,-1.4 120.27,0.26 276.42,-22.84 337.95,121.77 15.37,36.11 23.87,82.75 16.55,126.5 -16.29,97.37 -64.82,132.62 -137.31,168.18 30.02,3.59 56.21,5.86 84.86,12.75 24.43,5.87 57.95,19.8 79.83,21.84 21.93,-37.25 42.43,-40.38 72.9,-120.57 57.03,-150.06 -10.91,-332.79 -141.31,-404.97 -108.2,-59.89 -208.28,-45.46 -341.06,-45.22 -69.64,0.13 -342.82,-3.29 -387.41,1.06 -13.12,6.34 -7.37,61.1 -7.45,86.39 -0.2,68.83 -2.97,221.06 1.56,273.82l116.22 2.64 2.99 -242.77zm-75.89 520.79c44.03,22.87 38.67,44.28 56.14,62.34 14.3,-11.9 38.05,-42.41 55.52,-46.79 84.44,-21.18 -0.46,61.02 179.48,-123.07l150.93 -152.53c61.27,-60.9 47.62,-44.91 14.2,-87.98 -52.78,-68.03 -52.61,-52.32 -159.26,53.29 -11.15,11.04 -19.49,17.61 -30.27,29.54l-266.75 265.2z" />
+          </g>
+        </svg>
+        <span>BarberMemo</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#recursos" class="nav-link">Recursos</a>
+        <a href="#como-funciona" class="nav-link">Como funciona</a>
+        <a href="#precos" class="nav-link">Preços</a>
+        <a href="/login" class="nav-link" style="color: #D86902; font-weight: 600;">Entrar</a>
+      </nav>
+      <a href="https://wa.me/5593991990984?text=Olá,%20estou%20interessado%20no%20sistema%20BarberMemo,%20poderia%20me%20explicar%20melhor?"
+        class="btn btn-secondary btn-sm header-cta">Entrar em contato</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-icon">✨</span>
+          <span>7 dias de teste grátis • Sem cartão</span>
+        </div>
+        <h1 class="hero-title">
+          Nunca mais perca o tempo de <span>retorno</span> dos seus clientes.
+        </h1>
+        <p class="hero-description">
+          A agenda inteligente para barbeiros que automatiza os alertas de retorno via WhatsApp, organiza fichas de
+          cortes com fotos e fideliza seus clientes de forma automatizada.
+        </p>
+        <div class="hero-actions">
+          <a href="#precos" class="btn btn-primary btn-lg">Experimentar Grátis Agora</a>
+          <a href="#como-funciona" class="btn btn-tertiary btn-lg">Como Funciona →</a>
+        </div>
+        <div class="hero-features-preview">
+          <div class="preview-item">
+            <span class="check-icon">✓</span>
+            <span>Fichas de Corte com Foto</span>
+          </div>
+          <div class="preview-item">
+            <span class="check-icon">✓</span>
+            <span>Alertas de Retorno Inteligentes</span>
+          </div>
+          <div class="preview-item">
+            <span class="check-icon">✓</span>
+            <span>Lembrete de WhatsApp em 1 clique</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive CSS Mobile Mockup -->
+      <div class="hero-mockup">
+        <!-- Mockup Tab Selector -->
+        <div class="mockup-tabs">
+          <button class="mockup-tab active" data-target="screen-fidelizacao">
+            <span class="tab-icon">👤</span>
+            <span class="tab-label">Ficha & Retorno</span>
+          </button>
+          <button class="mockup-tab" data-target="screen-fila">
+            <span class="tab-icon">⏳</span>
+            <span class="tab-label">Fila & Status</span>
+          </button>
+          <button class="mockup-tab" data-target="screen-agendamento">
+            <span class="tab-icon">📅</span>
+            <span class="tab-label">Link do Cliente</span>
+          </button>
+        </div>
+
+        <div class="mockup-frame">
+          <div class="mockup-screen">
+            
+            <!-- Screen 1: Fidelização & Retorno -->
+            <div id="screen-fidelizacao" class="mockup-screen-content active">
+              <div class="mockup-header" style="padding: 12px 16px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <svg style="width: 14px; height: 14px;" viewBox="0 0 1018.56 1348.85" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                      <path fill="#D86902"
+                        d="M1.35 725.89c33.15,34 74.13,246.09 79.7,293.76 11.14,95.22 7.58,170.92 8.81,265.17 0.54,41.43 30.13,73.65 75.88,59 39.06,-12.51 41.33,-54.28 43.91,-99.76 5.59,-98.85 -7.15,-169.1 -14.48,-263.24l53.74 -0.02c19.62,24.88 12.63,104.19 13.42,143.6l28.86 0.22c1.32,-16.89 -11.12,-182.82 28.16,-139.59 15.35,35.35 -0.06,95.62 5.17,137.46l26.48 1.85c2.6,-36.6 -3.5,-118.02 4.2,-142.68 13.08,-2.52 11.34,-4.99 24.51,3.07l1.93 138.43 21.09 0.55c2.83,-35.21 -2.83,-117.32 7.39,-142.31l18.69 -1.47c12.99,22.23 6.27,111.76 6.39,142.44l27.37 2.72c1.75,-37.48 -5.5,-114.11 4.26,-142.06 46.77,-9.67 20.22,49.19 27.63,139.8l27.81 1.91c1.66,-34.53 -3.57,-119.45 4.28,-142.08l24.72 -1.57c7.87,23.71 4.12,109.67 4.98,139.6 14.78,5.17 11.62,5.45 25.29,-0.5 2.92,-36.34 -4.37,-108.62 4.73,-137.9l21.85 -2.31c10.22,20.67 4.97,114.65 5.66,143.13l28.57 2.49c0.06,-34.81 -8.45,-121.81 7.22,-143.79l18.43 -0.76c13.48,27.63 5.42,106.63 5.88,141.85l27.45 1.54c2.7,-93.93 -15.52,-147.2 27.71,-143.7 10.47,23.9 3.41,106.72 4.78,141.76 69.91,10.13 51.4,-92.25 51.83,-173.53 0.51,-98.33 -11.05,-82.04 -149.87,-82.82 -87.99,-0.5 -411.62,4.61 -467.91,-1.11 -8.39,-34.77 -45.97,-139.22 -46.63,-159.09 -17.47,-18.06 -12.11,-39.47 -56.14,-62.34 -56.13,-4.84 -69.89,28.62 -63.74,82.27zm50.58 -0.46c-13.41,0 -24.28,-10.87 -24.28,-24.28 0,-13.41 10.87,-24.28 24.28,-24.28 13.41,0 24.28,10.87 24.28,24.28 0,13.41 -10.87,24.28 -24.28,24.28z" />
+                      <path fill="#D86902"
+                        d="M521.43 734.83c134.77,6.54 220.07,-13.87 303.86,70.63 158.91,160.26 51.84,424.09 -175.61,423.54 -53.11,-0.13 -348.48,-4.4 -375.47,1.61 1.14,64.3 -1.82,69.89 -22.4,115.69 75.84,3.3 425.87,5.49 483.81,-7.26 131.46,-28.94 224.89,-121.61 263.67,-238.02 66.4,-199.33 -44.98,-413.2 -240.34,-468.46 -72.24,-20.43 -162.24,-17.15 -238.7,-15.77l1.19 118.04z" />
+                      <path fill="#F4F3F3"
+                        d="M140.99 122.83c87.55,-8.05 210.34,-1.6 301.67,-1.4 120.27,0.26 276.42,-22.84 337.95,121.77 15.37,36.11 23.87,82.75 16.55,126.5 -16.29,97.37 -64.82,132.62 -137.31,168.18 30.02,3.59 56.21,5.86 84.86,12.75 24.43,5.87 57.95,19.8 79.83,21.84 21.93,-37.25 42.43,-40.38 72.9,-120.57 57.03,-150.06 -10.91,-332.79 -141.31,-404.97 -108.2,-59.89 -208.28,-45.46 -341.06,-45.22 -69.64,0.13 -342.82,-3.29 -387.41,1.06 -13.12,6.34 -7.37,61.1 -7.45,86.39 -0.2,68.83 -2.97,221.06 1.56,273.82l116.22 2.64 2.99 -242.77zm-75.89 520.79c44.03,22.87 38.67,44.28 56.14,62.34 14.3,-11.9 38.05,-42.41 55.52,-46.79 84.44,-21.18 -0.46,61.02 179.48,-123.07l150.93 -152.53c61.27,-60.9 47.62,-44.91 14.2,-87.98 -52.78,-68.03 -52.61,-52.32 -159.26,53.29 -11.15,11.04 -19.49,17.61 -30.27,29.54l-266.75 265.2z" />
+                    </g>
+                  </svg>
+                  <div style="text-align: left; line-height: 1;">
+                    <span class="mockup-logo"
+                      style="font-size: 11px; font-weight: 800; display: block; color: #fff;">BarberMemo</span>
+                    <span style="font-size: 8px; color: var(--color-text-secondary);">Barbeiro: Lucas</span>
+                  </div>
+                </div>
+                <span class="mockup-logout-btn" style="cursor: pointer; opacity: 0.7;">
+                  <svg style="width: 12px; height: 12px; color: var(--color-text-secondary);" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                </span>
+              </div>
+
+              <div class="mockup-body"
+                style="padding: 12px; gap: 10px; flex: 1; display: flex; flex-direction: column; overflow-y: auto;">
+
+                <!-- Back button simulated -->
+                <div
+                  style="display: flex; align-items: center; gap: 4px; font-size: 9px; color: var(--color-text-secondary); opacity: 0.8; font-weight: bold; margin-bottom: -4px;">
+                  <span>←</span> <span>Voltar ao Painel</span>
+                </div>
+
+                <!-- Client Title Area -->
+                <div style="text-align: left;">
+                  <h3 class="mockup-client-name"
+                    style="font-size: 15px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 6px; margin: 0;">
+                    Carlos Henrique
+                    <span
+                      style="font-size: 7px; color: var(--color-accent-light); background-color: rgba(217, 119, 6, 0.08); border: 1px solid rgba(217, 119, 6, 0.2); padding: 1px 4px; border-radius: 4px; font-weight: bold; font-family: var(--font-sans);">CRM
+                      ID: 104</span>
+                  </h3>
+                  <span style="font-size: 9px; color: var(--color-text-secondary); display: block; margin-top: 2px;">
+                    📞 (11) 99888-7777
+                  </span>
+                </div>
+
+                <!-- Metadados & Alertas Card -->
+                <div class="mockup-card" style="padding: 12px; gap: 8px; border-radius: 12px;">
+                  <span
+                    style="font-size: 8px; font-weight: 800; color: var(--color-text-secondary); letter-spacing: 0.05em; text-transform: uppercase; text-align: left;">Metadados
+                    e Alertas</span>
+
+                  <div class="mockup-details" style="gap: 4px; font-size: 10px;">
+                    <div class="detail-row">
+                      <span style="color: var(--color-text-secondary);">Prazo de Retorno</span>
+                      <span style="color: var(--color-text-primary); font-weight: 600;">20 dias</span>
+                    </div>
+                    <div class="detail-row">
+                      <span style="color: var(--color-text-secondary);">Última Visita</span>
+                      <span style="color: var(--color-text-primary); font-weight: 600;">23/06/2026</span>
+                    </div>
+                    <div class="detail-row">
+                      <span style="color: var(--color-text-secondary);">Intervalo Decorrido</span>
+                      <span style="color: var(--color-accent-light); font-weight: 700;">22 dias (Atrasado)</span>
+                    </div>
+                  </div>
+
+                  <button class="mockup-btn-whatsapp animate-pulse-glow"
+                    style="background-color: #059669; box-shadow: 0 4px 10px rgba(5,150,105,0.2); padding: 8px 12px; font-size: 10px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; border: none; color: #fff; font-weight: 700; cursor: pointer; width: 100%;"
+                    onclick="alert('Mensagem predefinida de retorno copiada e enviada no WhatsApp!')">
+                    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;">
+                      <path
+                        d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.37 5.054L2.035 22l5.122-1.343a9.927 9.927 0 004.853 1.258h.005c5.507 0 9.99-4.478 9.991-9.985A9.972 9.972 0 0012.012 2zm5.723 14.194c-.247.697-1.246 1.34-1.745 1.4-1.377.168-3.056-.376-5.068-1.21-3.238-1.336-5.289-4.577-5.45-4.793-.162-.215-1.299-1.728-1.299-3.296 0-1.568.807-2.341 1.096-2.628.24-.239.638-.359.998-.359.117 0 .224.006.315.011.267.013.4.03.575.402.223.473.765 1.866.83 2.001.066.136.11.294.019.476-.09.182-.136.294-.272.453-.136.159-.286.356-.409.476-.136.136-.28.286-.12.56.16.273.712 1.173 1.529 1.898.125.11.229.215.342.308 1.047.85 1.865 1.109 2.197 1.272.332.164.524.137.719-.088.196-.226.837-.974.966-1.312.128-.337.256-.282.434-.217.178.066 1.127.531 1.32.627.192.095.32.143.367.225.048.082.048.477-.2.1.1.122-1.127.1-1.32zm0 0" />
+                    </svg>
+                    Lembrar no WhatsApp
+                  </button>
+                </div>
+
+                <!-- Linha do Tempo Visit Card -->
+                <div class="mockup-card" style="padding: 12px; gap: 8px; border-radius: 12px;">
+                  <div
+                    style="display: flex; justify-content: space-between; font-size: 10px; font-weight: bold; border-bottom: 1px solid var(--color-border); padding-bottom: 6px;">
+                    <span style="color: var(--color-text-primary); font-family: var(--font-title);">📅 23/06/2026</span>
+                    <span
+                      style="color: var(--color-text-secondary); background: var(--color-light); padding: 1px 6px; border-radius: 4px; font-size: 8px; font-weight: 600;">há
+                      22 dias</span>
+                  </div>
+
+                  <div class="mockup-details"
+                    style="gap: 6px; display: grid; grid-template-columns: repeat(2, 1fr); font-size: 10px;">
+                    <div style="text-align: left;">
+                      <span
+                        style="font-size: 7px; color: var(--color-text-secondary); text-transform: uppercase; font-weight: 700; display: block; letter-spacing: 0.02em;">Laterais</span>
+                      <span style="font-weight: 600; color: #fff; font-size: 10px;">Degradê Navalhado</span>
+                    </div>
+                    <div style="text-align: left;">
+                      <span
+                        style="font-size: 7px; color: var(--color-text-secondary); text-transform: uppercase; font-weight: 700; display: block; letter-spacing: 0.02em;">Topo</span>
+                      <span style="font-weight: 600; color: #fff; font-size: 10px;">Desfiado curto</span>
+                    </div>
+                    <div style="text-align: left;">
+                      <span
+                        style="font-size: 7px; color: var(--color-text-secondary); text-transform: uppercase; font-weight: 700; display: block; letter-spacing: 0.02em;">Barba</span>
+                      <span style="font-weight: 600; color: #fff; font-size: 10px;">Sem Barba</span>
+                    </div>
+                    <div style="text-align: left;">
+                      <span
+                        style="font-size: 7px; color: var(--color-text-secondary); text-transform: uppercase; font-weight: 700; display: block; letter-spacing: 0.02em;">Produtos</span>
+                      <span style="font-weight: 600; color: #fff; font-size: 10px;">Pomada Matte</span>
+                    </div>
+                  </div>
+
+                  <div class="mockup-photos" style="margin-top: 4px; display: flex; gap: 8px;">
+                    <div class="mockup-photo"
+                      style="background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=120&h=120'); width: 36px; height: 36px; border-radius: 6px; background-size: cover; border: 1px solid var(--color-border);">
+                    </div>
+                    <div class="mockup-photo"
+                      style="background-image: url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=120&h=120'); width: 36px; height: 36px; border-radius: 6px; background-size: cover; border: 1px solid var(--color-border);">
+                    </div>
+                    <div class="mockup-photo-empty"
+                      style="width: 36px; height: 36px; border-radius: 6px; border: 1px dashed var(--color-border); display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: 11px;">
+                      +</div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Bottom simulated navigation bar -->
+              <div class="mockup-nav"
+                style="border-top: 1px solid var(--color-border); background-color: var(--color-card); padding: 8px 10px; display: flex; justify-content: space-around; font-size: 7.5px; color: var(--color-text-secondary); margin-top: auto; user-select: none; -webkit-user-select: none;">
+                <div
+                  style="display: flex; flex-direction: column; align-items: center; color: var(--color-accent-light); font-weight: bold; cursor: pointer; gap: 2px;">
+                  <span style="font-size: 11px; line-height: 1;">✂️</span>
+                  <span>Painel</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer; gap: 2px;">
+                  <span style="font-size: 11px; line-height: 1;">📅</span>
+                  <span>Agenda</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer; gap: 2px;">
+                  <span style="font-size: 11px; line-height: 1;">📊</span>
+                  <span>Métricas</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer; gap: 2px;">
+                  <span style="font-size: 11px; line-height: 1;">👤</span>
+                  <span>Novo</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Screen 2: Fila Virtual & Status -->
+            <div id="screen-fila" class="mockup-screen-content">
+              <div class="mockup-header" style="padding: 12px 16px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <svg style="width: 14px; height: 14px;" viewBox="0 0 1018.56 1348.85" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                      <path fill="#D86902" d="M1.35 725.89c33.15,34 74.13,246.09 79.7,293.76 11.14,95.22 7.58,170.92 8.81,265.17 0.54,41.43 30.13,73.65 75.88,59 39.06,-12.51 41.33,-54.28 43.91,-99.76 5.59,-98.85 -7.15,-169.1 -14.48,-263.24l53.74 -0.02c19.62,24.88 12.63,104.19 13.42,143.6l28.86 0.22c1.32,-16.89 -11.12,-182.82 28.16,-139.59 15.35,35.35 -0.06,95.62 5.17,137.46l26.48 1.85c2.6,-36.6 -3.5,-118.02 4.2,-142.68 13.08,-2.52 11.34,-4.99 24.51,3.07l1.93 138.43 21.09 0.55c2.83,-35.21 -2.83,-117.32 7.39,-142.31l18.69 -1.47c12.99,22.23 6.27,111.76 6.39,142.44l27.37 2.72c1.75,-37.48 -5.5,-114.11 4.26,-142.06 46.77,-9.67 20.22,49.19 27.63,139.8l27.81 1.91c1.66,-34.53 -3.57,-119.45 4.28,-142.08l24.72 -1.57c7.87,23.71 4.12,109.67 4.98,139.6 14.78,5.17 11.62,5.45 25.29,-0.5 2.92,-36.34 -4.37,-108.62 4.73,-137.9l21.85 -2.31c10.22,20.67 4.97,114.65 5.66,143.13l28.57 2.49c0.06,-34.81 -8.45,-121.81 7.22,-143.79l18.43 -0.76c13.48,27.63 5.42,106.63 5.88,141.85l27.45 1.54c2.7,-93.93 -15.52,-147.2 27.71,-143.7 10.47,23.9 3.41,106.72 4.78,141.76 69.91,10.13 51.4,-92.25 51.83,-173.53 0.51,-98.33 -11.05,-82.04 -149.87,-82.82 -87.99,-0.5 -411.62,4.61 -467.91,-1.11 -8.39,-34.77 -45.97,-139.22 -46.63,-159.09 -17.47,-18.06 -12.11,-39.47 -56.14,-62.34 -56.13,-4.84 -69.89,28.62 -63.74,82.27zm50.58 -0.46c-13.41,0 -24.28,-10.87 -24.28,-24.28 0,-13.41 10.87,-24.28 24.28,-24.28 13.41,0 24.28,10.87 24.28,24.28 0,13.41 -10.87,24.28 -24.28,24.28z" />
+                      <path fill="#D86902"
+                        d="M521.43 734.83c134.77,6.54 220.07,-13.87 303.86,70.63 158.91,160.26 51.84,424.09 -175.61,423.54 -53.11,-0.13 -348.48,-4.4 -375.47,1.61 1.14,64.3 -1.82,69.89 -22.4,115.69 75.84,3.3 425.87,5.49 483.81,-7.26 131.46,-28.94 224.89,-121.61 263.67,-238.02 66.4,-199.33 -44.98,-413.2 -240.34,-468.46 -72.24,-20.43 -162.24,-17.15 -238.7,-15.77l1.19 118.04z" />
+                      <path fill="#F4F3F3"
+                        d="M140.99 122.83c87.55,-8.05 210.34,-1.6 301.67,-1.4 120.27,0.26 276.42,-22.84 337.95,121.77 15.37,36.11 23.87,82.75 16.55,126.5 -16.29,97.37 -64.82,132.62 -137.31,168.18 30.02,3.59 56.21,5.86 84.86,12.75 24.43,5.87 57.95,19.8 79.83,21.84 21.93,-37.25 42.43,-40.38 72.9,-120.57 57.03,-150.06 -10.91,-332.79 -141.31,-404.97 -108.2,-59.89 -208.28,-45.46 -341.06,-45.22 -69.64,0.13 -342.82,-3.29 -387.41,1.06 -13.12,6.34 -7.37,61.1 -7.45,86.39 -0.2,68.83 -2.97,221.06 1.56,273.82l116.22 2.64 2.99 -242.77zm-75.89 520.79c44.03,22.87 38.67,44.28 56.14,62.34 14.3,-11.9 38.05,-42.41 55.52,-46.79 84.44,-21.18 -0.46,61.02 179.48,-123.07l150.93 -152.53c61.27,-60.9 47.62,-44.91 14.2,-87.98 -52.78,-68.03 -52.61,-52.32 -159.26,53.29 -11.15,11.04 -19.49,17.61 -30.27,29.54l-266.75 265.2z" />
+                    </g>
+                  </svg>
+                  <div style="text-align: left; line-height: 1;">
+                    <span class="mockup-logo"
+                      style="font-size: 11px; font-weight: 800; display: block; color: #fff;">BarberMemo</span>
+                    <span style="font-size: 8px; color: var(--color-text-secondary);">Fila de Espera</span>
+                  </div>
+                </div>
+                <div class="live-status-pill"
+                  style="font-size: 8px; background-color: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 100px; font-weight: 700; display: flex; align-items: center; gap: 4px; user-select: none;">
+                  <span class="live-pulse"
+                    style="width: 5px; height: 5px; background-color: #10b981; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite;"></span>
+                  Disponível
+                </div>
+              </div>
+
+              <div class="mockup-body"
+                style="padding: 12px; gap: 10px; flex: 1; display: flex; flex-direction: column; overflow-y: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: -2px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #fff;">Painel da Fila</span>
+                  <span style="font-size: 9px; color: var(--color-accent-light); font-weight: 700;">⏳ Fila: 70 min</span>
+                </div>
+
+                <!-- Cadeira Section -->
+                <div class="mockup-card"
+                  style="padding: 10px; gap: 6px; border-radius: 10px; border-left: 3px solid #10b981; background-color: rgba(16, 185, 129, 0.02);">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span
+                      style="font-size: 7.5px; font-weight: 800; color: #10b981; text-transform: uppercase; letter-spacing: 0.05em;">Na Cadeira</span>
+                    <span style="font-size: 7px; color: var(--color-text-secondary);">Iniciado há 15m</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11px; font-weight: 700; color: #fff;">Marcos Silva</span>
+                    <span style="font-size: 9.5px; color: var(--color-text-secondary); font-weight: 600;">Corte + Barba</span>
+                  </div>
+                </div>
+
+                <!-- Lista de Espera Section -->
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <span
+                    style="font-size: 8px; font-weight: 800; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; text-align: left;">Próximos da Fila (2)</span>
+
+                  <!-- Fila Item 1 -->
+                  <div
+                    style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 8px 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="text-align: left; line-height: 1.2;">
+                      <span style="font-size: 10.5px; font-weight: 700; color: #fff; display: block;">1. Felipe Amorim</span>
+                      <span style="font-size: 8px; color: var(--color-text-secondary);">✂️ Corte • ⏳ 40 min</span>
+                    </div>
+                    <button
+                      style="background-color: var(--color-accent); color: #fff; border: none; font-size: 8px; font-weight: 700; padding: 4px 8px; border-radius: 4px; cursor: pointer;"
+                      onclick="alert('Chamando Felipe Amorim para a cadeira de corte!')">Chamar</button>
+                  </div>
+
+                  <!-- Fila Item 2 -->
+                  <div
+                    style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 8px 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; opacity: 0.7;">
+                    <div style="text-align: left; line-height: 1.2;">
+                      <span style="font-size: 10.5px; font-weight: 700; color: #fff; display: block;">2. Rodrigo Costa</span>
+                      <span style="font-size: 8px; color: var(--color-text-secondary);">🧔 Barba • ⏳ 30 min</span>
+                    </div>
+                    <span style="font-size: 8px; color: var(--color-text-secondary); font-weight: 600;">Aguardando</span>
+                  </div>
+                </div>
+
+                <!-- Adicionar Cliente Button -->
+                <button
+                  style="background-color: var(--color-light); border: 1px dashed var(--color-border); color: var(--color-text-primary); font-size: 9px; padding: 7px; border-radius: 8px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 4px; cursor: pointer; width: 100%; margin-top: auto; border-style: dashed;"
+                  onclick="alert('Adicionar cliente manualmente na fila de espera virtual!')">
+                  <span>+</span> Adicionar Cliente na Fila
+                </button>
+              </div>
+
+              <div class="mockup-nav"
+                style="border-top: 1px solid var(--color-border); background-color: var(--color-card); padding: 8px 10px; display: flex; justify-content: space-around; font-size: 7.5px; color: var(--color-text-secondary); margin-top: auto; user-select: none; -webkit-user-select: none;">
+                <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer; gap: 2px;">
+                  <span style="font-size: 11px; line-height: 1;">✂️</span>
+                  <span>Painel</span>
+                </div>
+                <div
+                  style="display: flex; flex-direction: column; align-items: center; color: var(--color-accent-light); font-weight: bold; cursor: pointer; gap: 2px;">
+                  <span style="font-size: 11px; line-height: 1;">⏳</span>
+                  <span>Fila</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer; gap: 2px;">
+                  <span style="font-size: 11px; line-height: 1;">📊</span>
+                  <span>Métricas</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer; gap: 2px;">
+                  <span style="font-size: 11px; line-height: 1;">⚙️</span>
+                  <span>Ajustes</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Screen 3: Agendamento Online (Link do Cliente) -->
+            <div id="screen-agendamento" class="mockup-screen-content">
+              <div class="mockup-header" style="padding: 12px 16px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="font-size: 13px;">💈</span>
+                  <div style="text-align: left; line-height: 1;">
+                    <span style="font-size: 10.5px; font-weight: 800; display: block; color: #fff;">Barbearia do Lucas</span>
+                    <span style="font-size: 7.5px; color: var(--color-text-secondary);">Agendamento Online</span>
+                  </div>
+                </div>
+                <div
+                  style="font-size: 7.5px; background-color: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px; font-weight: 700;">
+                  🟢 Aberto
+                </div>
+              </div>
+
+              <div class="mockup-body"
+                style="padding: 10px 12px; gap: 8px; flex: 1; display: flex; flex-direction: column; overflow-y: auto; text-align: left;">
+
+                <!-- Escolha o Serviço -->
+                <div>
+                  <span
+                    style="font-size: 8px; font-weight: 800; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">1. Escolha o Serviço</span>
+                  <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 3px;">
+                    <div
+                      style="background-color: var(--color-card); border: 1.5px solid var(--color-accent); padding: 6px 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                      <div style="line-height: 1.1;">
+                        <span style="font-size: 10px; font-weight: 700; color: #fff; display: block;">✂️ Corte Masculino</span>
+                        <span style="font-size: 7.5px; color: var(--color-text-secondary);">Duração: 40 min</span>
+                      </div>
+                      <span style="font-size: 10px; font-weight: bold; color: var(--color-accent-light);">R$ 40</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Escolha a Data -->
+                <div>
+                  <span
+                    style="font-size: 8px; font-weight: 800; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">2. Escolha o Dia</span>
+                  <div style="display: flex; gap: 4px; margin-top: 3px;">
+                    <div
+                      style="flex: 1; background-color: var(--color-accent); border: 1px solid var(--color-accent); padding: 4px; border-radius: 6px; text-align: center; color: #fff; line-height: 1.1;">
+                      <span style="font-size: 7px; text-transform: uppercase; opacity: 0.8; display: block;">Hoje</span>
+                      <span style="font-size: 9px; font-weight: 800;">17 Jul</span>
+                    </div>
+                    <div
+                      style="flex: 1; background-color: var(--color-card); border: 1px solid var(--color-border); padding: 4px; border-radius: 6px; text-align: center; color: var(--color-text-secondary); line-height: 1.1;">
+                      <span style="font-size: 7px; text-transform: uppercase; display: block;">Amanhã</span>
+                      <span style="font-size: 9px; font-weight: 600; color: var(--color-text-primary);">18 Jul</span>
+                    </div>
+                    <div
+                      style="flex: 1; background-color: var(--color-card); border: 1px solid var(--color-border); padding: 4px; border-radius: 6px; text-align: center; color: var(--color-text-secondary); line-height: 1.1;">
+                      <span style="font-size: 7px; text-transform: uppercase; display: block;">Sáb</span>
+                      <span style="font-size: 9px; font-weight: 600; color: var(--color-text-primary);">19 Jul</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Escolha o Horário -->
+                <div>
+                  <span
+                    style="font-size: 8px; font-weight: 800; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">3. Horários Disponíveis</span>
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 3px;">
+                    <span
+                      style="font-size: 9px; background-color: rgba(255,255,255,0.02); color: var(--color-text-secondary); border: 1px dashed var(--color-border); padding: 4px; border-radius: 5px; text-align: center; opacity: 0.4;">09:00</span>
+                    <span
+                      style="font-size: 9px; background-color: rgba(217, 119, 6, 0.15); color: var(--color-accent-light); border: 1px solid var(--color-accent); padding: 4px; border-radius: 5px; text-align: center; font-weight: 700;">09:40</span>
+                    <span
+                      style="font-size: 9px; background-color: var(--color-card); color: var(--color-text-primary); border: 1px solid var(--color-border); padding: 4px; border-radius: 5px; text-align: center; font-weight: 600;">10:20</span>
+                  </div>
+                </div>
+
+                <!-- Formulário de Contato -->
+                <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 2px;">
+                  <input type="text" placeholder="Seu Nome completo" value="Pedro Augusto" readonly
+                    style="width: 100%; border: 1px solid var(--color-border); background: var(--color-card); border-radius: 5px; padding: 4px 6px; font-size: 8.5px; color: #fff;">
+                  <input type="text" placeholder="Seu WhatsApp" value="(93) 99199-9999" readonly
+                    style="width: 100%; border: 1px solid var(--color-border); background: var(--color-card); border-radius: 5px; padding: 4px 6px; font-size: 8.5px; color: #fff;">
+                </div>
+
+                <!-- Confirmar agendamento button -->
+                <button
+                  style="background-color: var(--color-accent); color: #fff; border: none; font-size: 9.5px; font-weight: 800; padding: 8px; border-radius: 6px; width: 100%; cursor: pointer; text-align: center; margin-top: auto;"
+                  onclick="alert('Agendamento confirmado com sucesso! Lucas entrará em contato.')">
+                  Confirmar Agendamento
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid Section -->
+  <section id="recursos" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Como o BarberMemo te ajuda a faturar mais</h2>
+        <p class="section-subtitle">Tudo o que você precisa para gerenciar sua agenda e clientes sem complicação.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1: Alertas Inteligentes -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Alertas Inteligentes de Retorno</h3>
+          <p class="feature-description">O sistema calcula o tempo ideal de retorno de cada cliente. Você vê no painel
+            quem está atrasado e o chama imediatamente.</p>
+        </div>
+
+        <!-- Feature 2: Agendamento Online -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Agendamento Online 24h</h3>
+          <p class="feature-description">Seu cliente agenda sozinho pelo seu link público personalizado. Selecionando o serviço, o dia e o horário disponível em tempo real.</p>
+        </div>
+
+        <!-- Feature 3: Fila de Espera Virtual -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Fila de Espera Virtual</h3>
+          <p class="feature-description">Ideal para quem atende por ordem de chegada. Fila de espera inteligente em tempo real com cálculo automático de estimativa de espera.</p>
+        </div>
+
+        <!-- Feature 4: Ficha com Histórico e Fotos -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Ficha com Histórico e Fotos</h3>
+          <p class="feature-description">Registre detalhes de como o cabelo foi cortado (topo, laterais, barba) e guarde
+            fotos por atendimento diretamente na nuvem de forma automática.</p>
+        </div>
+
+        <!-- Feature 5: Status em Tempo Real -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Status em Tempo Real</h3>
+          <p class="feature-description">Mostre aos clientes no seu link público se você está Disponível, em Almoço, em Pausa ou Ausente, evitando frustrações e otimizando o fluxo.</p>
+        </div>
+
+        <!-- Feature 6: Gestão de Equipe -->
+        <div class="feature-card">
+          <div class="feature-icon-wrapper">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z" />
+            </svg>
+          </div>
+          <h3 class="feature-title">Gestão de Equipes (SaaS)</h3>
+          <p class="feature-description">Donos de barbearia gerenciam múltiplos barbeiros (até 5) no painel, com isolamento total de dados e relatórios consolidados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works section -->
+  <section id="como-funciona" class="how-it-works reveal">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Em menos de 2 minutos você começa</h2>
+        <p class="section-subtitle">Tudo online. Não precisa instalar nada no celular ou no computador.</p>
+      </div>
+
+      <div class="steps-flow">
+        <div class="step-card reveal" style="transition-delay: 0.1s;">
+          <div class="step-number">1</div>
+          <h4 class="step-title">Faça o Cadastro do Cliente</h4>
+          <p class="step-desc">Insira o nome, WhatsApp e a frequência média que ele costuma cortar (ex: 20 dias).</p>
+        </div>
+        <div class="step-card reveal" style="transition-delay: 0.2s;">
+          <div class="step-number">2</div>
+          <h4 class="step-title">Registre a Ficha do Corte</h4>
+          <p class="step-desc">Ao terminar o atendimento, anote a especificação e suba fotos para lembrar como foi feito.</p>
+        </div>
+        <div class="step-card reveal" style="transition-delay: 0.3s;">
+          <div class="step-number">3</div>
+          <h4 class="step-title">Envie o Alerta e Garanta o Retorno</h4>
+          <p class="step-desc">O app avisa quando der os dias definidos. Você clica em "Lembrar" e envia a mensagem pelo WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Calculator Section -->
+  <section class="calculator-section" id="calculadora">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Calcule quanto você vai faturar a mais</h2>
+        <p class="section-subtitle">Descubra o potencial de faturamento do resgate de clientes sumidos usando o BarberMemo.</p>
+      </div>
+      
+      <div class="calculator-grid">
+        <div class="calc-inputs reveal-left">
+          <div class="calc-input-group">
+            <div class="calc-label-row">
+              <span class="calc-label">Preço médio do seu corte</span>
+              <span class="calc-value" id="price-display">R$ 50</span>
+            </div>
+            <input type="range" id="input-price" min="20" max="150" step="5" value="50" class="calc-slider">
+          </div>
+          
+          <div class="calc-input-group">
+            <div class="calc-label-row">
+              <span class="calc-label">Quantos clientes você atende por mês?</span>
+              <span class="calc-value" id="clients-display">150</span>
+            </div>
+            <input type="range" id="input-clients" min="30" max="400" step="10" value="150" class="calc-slider">
+          </div>
+        </div>
+        
+        <div class="calc-results-card reveal-right">
+          <span class="calc-card-badge">RETENÇÃO DE +10%</span>
+          <h4 class="calc-results-title">Aumento de Faturamento Estimado</h4>
+          <div class="calc-earnings">
+            <span class="calc-currency">R$</span>
+            <span class="calc-amount" id="result-earnings">750,00</span>
+            <span class="calc-period">/mês extra</span>
+          </div>
+          <p class="calc-explanation">
+            Trazendo apenas 10% a mais dos seus clientes de volta para a cadeira usando o alerta automático do WhatsApp, você aumenta seu ganho mensal de forma recorrente.
+          </p>
+          <div class="calc-comparison">
+            <span>Mensalidade do BarberMemo (Anual):</span>
+            <strong class="calc-cost">R$ 39,90/mês</strong>
+          </div>
+          <a href="#precos" class="btn btn-primary btn-full">Começar a Faturar Mais</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="precos" class="pricing-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">O investimento que se paga no primeiro dia</h2>
+        <p class="section-subtitle">Escolha o plano ideal para você ou para a sua equipe e veja o sistema se pagar sozinho.</p>
+      </div>
+
+      <!-- Pricing Toggle Selector -->
+      <div class="pricing-toggle-container reveal">
+        <span class="toggle-label active" id="label-monthly">Mensal</span>
+        <button class="pricing-toggle" id="pricing-switch" aria-label="Alterar faturamento">
+          <span class="toggle-circle"></span>
+        </button>
+        <span class="toggle-label" id="label-annual">Anual <span class="toggle-discount">Economize 33%</span></span>
+      </div>
+
+      <div class="pricing-card-wrapper">
+        <!-- Plano Autônomo -->
+        <div class="pricing-card secondary reveal-left" id="card-autonomo">
+          <div class="pricing-badge" id="badge-autonomo" style="background-color: var(--color-light); color: var(--color-text-secondary); border: 1px solid var(--color-border);">TESTE GRÁTIS</div>
+          <h3 class="plan-name">Plano Autônomo</h3>
+          <p class="plan-desc">Perfeito para barbeiros individuais, autônomos ou que alugam cadeira.</p>
+
+          <div class="price-area" style="flex-direction: column; align-items: center; gap: 4px;">
+            <div style="display: flex; align-items: baseline; gap: 4px;">
+              <span class="currency" id="price-autonomo-curr">R$</span>
+              <span class="price-value" id="price-autonomo-val" style="font-size: 56px;">59,90</span>
+              <span class="period" id="price-autonomo-period">/mês</span>
+            </div>
+            <span class="period" id="price-autonomo-note" style="font-size: 11px; font-weight: 500; color: var(--color-text-secondary);">Faturamento mensal, sem fidelidade</span>
+          </div>
+
+          <ul class="pricing-features">
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Clientes e agendamentos ilimitados
+            </li>
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Fichas de corte e histórico completo
+            </li>
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Armazenamento de fotos na nuvem
+            </li>
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Lembretes no WhatsApp em 1 clique
+            </li>
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Link de agendamento e Fila virtual
+            </li>
+          </ul>
+
+          <a href="https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Mensal%20Autônomo%20do%20BarberMemo%20(R$%2059,90/mês)%20para%20começar%20meu%20teste%20grátis." target="_blank" id="price-autonomo-btn" class="btn btn-secondary btn-full">Experimentar 7 Dias Grátis</a>
+          <span class="pricing-footer-note">Cancele quando quiser. Sem taxas de cancelamento.</span>
+        </div>
+
+        <!-- Plano Barbearia -->
+        <div class="pricing-card reveal-right" id="card-barbearia">
+          <div class="pricing-badge" id="badge-barbearia">RECOMENDADO PARA EQUIPES</div>
+          <h3 class="plan-name" style="color: var(--color-accent-light);">Plano Barbearia</h3>
+          <p class="plan-desc">Para donos de barbearia com equipe de até 5 profissionais cadastrados.</p>
+
+          <div class="price-area" style="flex-direction: column; align-items: center; gap: 4px;">
+            <div style="display: flex; align-items: baseline; gap: 4px;">
+              <span class="currency" id="price-barbearia-curr">R$</span>
+              <span class="price-value" id="price-barbearia-val" style="font-size: 56px;">189,99</span>
+              <span class="period" id="price-barbearia-period">/mês</span>
+            </div>
+            <span class="period" id="price-barbearia-note" style="font-size: 11px; font-weight: 500; color: var(--color-accent-light);">Faturamento mensal, sem fidelidade</span>
+          </div>
+
+          <ul class="pricing-features">
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Tudo do Plano Autônomo
+            </li>
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Até 5 profissionais/barbeiros ativos
+            </li>
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Painel SaaS administrativo geral
+            </li>
+            <li>
+              <svg class="check-icon-green" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Isolamento de banco de dados por barbeiro
+            </li>
+          </ul>
+
+          <a href="https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Mensal%20Barbearia%20do%20BarberMemo%20(R$%20189,99/mês)%20para%20começar%20nosso%20teste%20de%20equipe." target="_blank" id="price-barbearia-btn" class="btn btn-primary btn-full">Adquirir Plano Barbearia</a>
+          <span class="pricing-footer-note">Sem taxa de adesão ou taxas ocultas.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section reveal">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Perguntas Frequentes</h2>
+        <p class="section-subtitle">Dúvidas comuns sobre o uso e contratação do sistema.</p>
+      </div>
+
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <button class="faq-trigger">
+            <span>Preciso cadastrar cartão para os 7 dias grátis?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-content">
+            <p>Não! O teste é totalmente gratuito e livre. Você cria sua conta e tem 7 dias para usar sem nenhuma restrição. Só contrata se gostar e achar que o app realmente ajuda o seu negócio.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger">
+            <span>Como funcionam os alertas no WhatsApp?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-content">
+            <p>O sistema monitora a data do último corte de cada cliente. Assim que atinge a quantidade de dias cadastrada, ele mostra um botão rápido de aviso. Ao clicar nele, a mensagem personalizada já é escrita e o app do WhatsApp se abre automaticamente para envio.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger">
+            <span>Se eu trocar ou perder meu celular, perco meus dados?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-content">
+            <p>Não, de jeito nenhum! O BarberMemo é um sistema 100% em nuvem. Isso significa que todos os seus clientes, fotos e históricos de cortes ficam salvos com total segurança. Se você trocar de aparelho ou precisar acessar do computador, basta fazer login com seu e-mail e senha para encontrar tudo lá.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger">
+            <span>Posso usar com outros barbeiros da minha equipe?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-content">
+            <p>Sim! A conta administrativa do BarberMemo permite que você adicione quantos barbeiros desejar. Os dados de cada barbeiro ficam isolados de maneira segura, e o administrador consegue ver métricas gerais de todos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <span>BarberMemo © 2026. Todos os direitos reservados.</span>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript logic -->
+  <script>
+    // 1. FAQ ACCORDION TRANSITIONS
+    document.querySelectorAll('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.parentNode;
+        const content = item.querySelector('.faq-content');
+        const isActive = item.classList.contains('active');
+        
+        // Close all other items
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+          otherItem.classList.remove('active');
+          otherItem.querySelector('.faq-content').style.maxHeight = null;
+        });
+        
+        if (!isActive) {
+          item.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // 2. PROFIT / ROI CALCULATOR LOGIC
+    const inputPrice = document.getElementById('input-price');
+    const inputClients = document.getElementById('input-clients');
+    const priceDisplay = document.getElementById('price-display');
+    const clientsDisplay = document.getElementById('clients-display');
+    const resultEarnings = document.getElementById('result-earnings');
+    
+    function updateCalculator() {
+      const price = parseInt(inputPrice.value, 10);
+      const clients = parseInt(inputClients.value, 10);
+      
+      priceDisplay.textContent = `R$ ${price}`;
+      clientsDisplay.textContent = clients;
+      
+      // Calculate 10% extra retention earnings
+      const extraClients = clients * 0.1;
+      const earnings = price * extraClients;
+      
+      resultEarnings.textContent = earnings.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    
+    inputPrice.addEventListener('input', updateCalculator);
+    inputClients.addEventListener('input', updateCalculator);
+    updateCalculator();
+
+    // 3. PRICING TOGGLE SWITCHER LOGIC
+    const pricingSwitch = document.getElementById('pricing-switch');
+    const labelMonthly = document.getElementById('label-monthly');
+    const labelAnnual = document.getElementById('label-annual');
+    
+    // Autônomo elements
+    const priceAutonomoVal = document.getElementById('price-autonomo-val');
+    const priceAutonomoNote = document.getElementById('price-autonomo-note');
+    const priceAutonomoBtn = document.getElementById('price-autonomo-btn');
+    
+    // Barbearia elements
+    const priceBarbeariaVal = document.getElementById('price-barbearia-val');
+    const priceBarbeariaNote = document.getElementById('price-barbearia-note');
+    const priceBarbeariaBtn = document.getElementById('price-barbearia-btn');
+
+    let isAnnual = false;
+
+    function togglePricing() {
+      isAnnual = !isAnnual;
+      
+      if (isAnnual) {
+        pricingSwitch.classList.add('active');
+        labelMonthly.classList.remove('active');
+        labelAnnual.classList.add('active');
+        
+        // Update Autônomo Price (Annual view)
+        priceAutonomoVal.textContent = '39,90';
+        priceAutonomoNote.textContent = 'R$ 478,80 cobrados anualmente (12x R$ 39,90)';
+        priceAutonomoBtn.href = "https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Quero%20adquirir%20o%20Plano%20Anual%20Autônomo%20do%20BarberMemo%20(12x%20de%20R$%2039,90)%20com%2033%25%20de%20desconto.";
+        
+        // Update Barbearia Price (Annual view)
+        priceBarbeariaVal.textContent = '126,90';
+        priceBarbeariaNote.textContent = 'R$ 1.522,80 cobrados anualmente (12x R$ 126,90)';
+        priceBarbeariaBtn.href = "https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Quero%20adquirir%20o%20Plano%20Anual%20Barbearia%20do%20BarberMemo%20(12x%20de%20R$%20126,90)%20com%2020%25%20de%20desconto.";
+      } else {
+        pricingSwitch.classList.remove('active');
+        labelMonthly.classList.add('active');
+        labelAnnual.classList.remove('active');
+        
+        // Update Autônomo Price (Monthly view)
+        priceAutonomoVal.textContent = '59,90';
+        priceAutonomoNote.textContent = 'Faturamento mensal, sem fidelidade';
+        priceAutonomoBtn.href = "https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Mensal%20Autônomo%20do%20BarberMemo%20(R$%2059,90/mês)%20para%20começar%20meu%20teste%20grátis.";
+        
+        // Update Barbearia Price (Monthly view)
+        priceBarbeariaVal.textContent = '189,99';
+        priceBarbeariaNote.textContent = 'Faturamento mensal, sem fidelidade';
+        priceBarbeariaBtn.href = "https://api.whatsapp.com/send?phone=5593991990984&text=Olá!%20Gostaria%20de%20assinar%20o%20Plano%20Mensal%20Barbearia%20do%20BarberMemo%20(R$%20189,99/mês)%20para%20começar%20nosso%20teste%20de%20equipe.";
+      }
+    }
+
+    pricingSwitch.addEventListener('click', togglePricing);
+    labelMonthly.addEventListener('click', () => {
+      if (isAnnual) togglePricing();
+    });
+    labelAnnual.addEventListener('click', () => {
+      if (!isAnnual) togglePricing();
+    });
+
+    // 4. SCROLL REVEAL INTERSECTION OBSERVER
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    });
+    
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // 5. MOCKUP TABS SWITCHER LOGIC
+    document.querySelectorAll('.mockup-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.getAttribute('data-target');
+        
+        // Remove active class from all tabs
+        document.querySelectorAll('.mockup-tab').forEach(t => t.classList.remove('active'));
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        // Hide all screens
+        document.querySelectorAll('.mockup-screen-content').forEach(screen => {
+          screen.classList.remove('active');
+        });
+        // Show target screen
+        const targetScreen = document.getElementById(targetId);
+        if (targetScreen) {
+          targetScreen.classList.add('active');
+        }
+      });
+    });
+
+    // Immediately trigger animations for elements visible on load
+    window.addEventListener('load', () => {
+      window.scrollBy(0, 1);
+      window.scrollBy(0, -1);
+    });
+  </script>
+
+</body>
+
+</html>

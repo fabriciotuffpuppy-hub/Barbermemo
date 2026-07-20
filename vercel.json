@@ -1,0 +1,10 @@
+{
+  "buildCommand": "node build.js",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/(login|admin|dashboard|agendar/.*|agendamentos.*|metrics|settings|clientes.*|app.*)",
+      "destination": "/app.html"
+    }
+  ]
+}
