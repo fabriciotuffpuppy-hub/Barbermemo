@@ -1,4 +1,5 @@
 {
+  "installCommand": "npm --prefix barbermemo install",
   "buildCommand": "node build.js",
   "outputDirectory": "dist",
   "rewrites": [
