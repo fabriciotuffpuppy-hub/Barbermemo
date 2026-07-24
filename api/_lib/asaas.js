@@ -17,7 +17,12 @@ export async function asaasFetch(path, options = {}) {
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    const message = data?.errors?.map((e) => e.description).join(' ') || 'Erro na comunicação com o Asaas.';
+    let message = 'Erro na comunicação com o Asaas.';
+    if (data?.errors && Array.isArray(data.errors) && data.errors.length > 0) {
+      message = data.errors.map((e) => e.description).join(' ');
+    } else {
+      message = `Erro na comunicação com o Asaas (Status ${res.status}${res.statusText ? ': ' + res.statusText : ''}). Verifique as credenciais no servidor.`;
+    }
     const err = new Error(message);
     err.asaasErrors = data?.errors;
     err.status = res.status;
